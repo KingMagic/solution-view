@@ -1,3 +1,69 @@
+.app {
+  height: 2160px;
+  width: 3840px;
+  background-image: url('./public/background.png');
+  background-size: cover;
+}
+
+.header {
+  height: 240px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.centerTitle {
+  background: url('./public/center-title.png');
+  background-size: 100% 100%;
+}
+
 .title {
-  background: rgb(121, 242, 157);
+  height: 20%;
+}
+
+.SolutionView {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  background-color: beige;
+}
+
+.salesOverview {
+  background: url('./public/salesOverview.png');
+  background-size: 100% 100%;
+  padding-top: 12%;
+}
+
+.hyjjfa {
+  background: url('./public/hyjjfafb.png');
+  background-size: 100% 100%;
+}
+
+.tabSelf {
+  :global {
+    .ant-tabs-card > .ant-tabs-nav {
+      & .ant-tabs-tab {
+        border: 0px;
+        color: #ffffff;
+        padding: 8px 24px;
+        font-size: 24px;
+        background-color: #682cea;
+        border-radius: 8px;
+      }
+      & .ant-tabs-tab-active {
+        background-color: #060c3b;
+      }
+    }
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: #ffffff;
+    }
+    .ant-tabs-top > .ant-tabs-nav::before {
+      border-bottom: 1px solid #032c7b;
+    }
+  }
 }
