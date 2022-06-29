@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { queryBzwtzl } from '../service';
+import styles from '../index.less';
 
 type DataItem = {
   id: number;
@@ -45,7 +46,11 @@ const Bzwtzl = () => {
           align: 'left',
           layout: 'vertical',
           verticalAlign: 'middle',
-          itemDistance: 48,
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
         },
         series: [
           {
@@ -82,7 +87,14 @@ const Bzwtzl = () => {
           align: 'left',
           layout: 'vertical',
           verticalAlign: 'middle',
-          itemDistance: 48,
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
+        },
+        tooltip: {
+          enabled: false,
         },
         series: [
           {
@@ -103,9 +115,8 @@ const Bzwtzl = () => {
   }, [dataListA]);
 
   return (
-    <div>
-      <div>title</div>
-      <Tabs centered type="card">
+    <div className={`${styles.bzwtzl}  ${styles.tabSelf}`}>
+      <Tabs centered tabBarGutter={32} type="card">
         <Tabs.TabPane key="1" tab="本周处理问题">
           <HighchartsReact highcharts={Highcharts} options={options} />
         </Tabs.TabPane>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { queryHangYeXiaoShou } from '../service';
+import styles from '../index.less';
 
 type DataItem = {
   id: number;
@@ -63,8 +64,7 @@ const Hyxsfb = () => {
   }, [hyxsDataList]);
 
   return (
-    <div>
-      <div>title</div>
+    <div className={styles.hyxsfb}>
       <HighchartsReact highcharts={Highcharts} options={hyxsOptions} />
     </div>
   );

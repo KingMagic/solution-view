@@ -31,10 +31,17 @@ const Hyjjfafb = () => {
           enabled: false,
         },
         legend: {
-          align: 'left',
+          align: 'right',
           layout: 'vertical',
           verticalAlign: 'middle',
-          itemDistance: 48,
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: -100,
+        },
+        tooltip: {
+          enabled: false,
         },
         series: [
           {

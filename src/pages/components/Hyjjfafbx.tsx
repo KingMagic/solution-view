@@ -33,12 +33,24 @@ const Hyjjfafb = () => {
         },
         legend: {
           align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemDistance: 48,
+          layout: 'horizontal',
+          verticalAlign: 'top',
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
+        },
+        tooltip: {
+          enabled: false,
         },
         xAxis: {
           categories: [...new Set(dataList.map((item) => item.FangAnName))],
+        },
+        yAxis: {
+          title: {
+            text: undefined,
+          },
         },
         series: [
           {
@@ -57,7 +69,7 @@ const Hyjjfafb = () => {
   }, [dataList]);
 
   return (
-    <div className={styles.hyjjfa}>
+    <div className={styles.hyjjfafbx}>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );

@@ -53,7 +53,14 @@ const SalesOverview = () => {
           align: 'left',
           layout: 'vertical',
           verticalAlign: 'middle',
-          itemDistance: 48,
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
+        },
+        tooltip: {
+          enabled: false,
         },
         series: [
           {
@@ -91,7 +98,14 @@ const SalesOverview = () => {
           align: 'left',
           layout: 'vertical',
           verticalAlign: 'middle',
-          itemDistance: 48,
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
+        },
+        tooltip: {
+          enabled: false,
         },
         series: [
           {
@@ -127,12 +141,24 @@ const SalesOverview = () => {
         },
         legend: {
           align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemDistance: 48,
+          layout: 'horizontal',
+          verticalAlign: 'top',
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
+        },
+        tooltip: {
+          enabled: false,
         },
         xAxis: {
           categories: [...new Set(hyjfDataList.map((item) => item.TableType))],
+        },
+        yAxis: {
+          title: {
+            text: undefined,
+          },
         },
         series: [...new Set(hyjfDataList.map((item) => item.ValueType))].map(
           (item) => ({

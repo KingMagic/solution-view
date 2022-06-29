@@ -87,7 +87,14 @@ const Sthzywzl = () => {
           align: 'left',
           layout: 'vertical',
           verticalAlign: 'middle',
-          itemDistance: 48,
+          itemStyle: {
+            color: '#ffffff',
+            fontSize: '16px',
+          },
+          x: 100,
+        },
+        tooltip: {
+          enabled: false,
         },
         series: [
           {
@@ -108,14 +115,23 @@ const Sthzywzl = () => {
   }, [hzlxDataList]);
 
   return (
-    <div>
-      <div>title</div>
-      <Tabs centered type="card">
+    <div className={`${styles.sthzywzl} ${styles.tabSelf}`}>
+      <Tabs centered tabBarGutter={32} type="card">
         <Tabs.TabPane key="1" tab="合作伙伴汇总">
-          <Space>
-            <HighchartsReact highcharts={Highcharts} options={hzhbOptions} />
-            <HighchartsReact highcharts={Highcharts} options={hzhbOptions} />
-          </Space>
+          <div style={{ display: 'flex', padding: '8px 16px' }}>
+            <div className={styles.left}>
+              <div className={styles.text}>
+                <p>品种数</p>
+                <p>123123</p>
+              </div>
+            </div>
+            <div className={styles.right}>
+              <div className={styles.text}>
+                <p>伙伴数</p>
+                <p>123123</p>
+              </div>
+            </div>
+          </div>
         </Tabs.TabPane>
         <Tabs.TabPane key="2" tab="合作类型占比">
           <HighchartsReact highcharts={Highcharts} options={hzlxOptions} />

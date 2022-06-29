@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { queryJjfaqj } from '../service';
+import styles from '../index.less';
 
 const Jjfaqj = () => {
   const [data, setData] = useState([]);
@@ -8,13 +9,7 @@ const Jjfaqj = () => {
     queryJjfaqj().then((res) => setData(res));
   }, []);
 
-  return (
-    <>
-      {data.map((item) => (
-        <div>{item.Value}</div>
-      ))}
-    </>
-  );
+  return <div className={styles.jjfaqj}>123</div>;
 };
 
 export default Jjfaqj;

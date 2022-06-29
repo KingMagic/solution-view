@@ -3,6 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Tabs } from 'antd';
 import { queryHyxq } from '../service';
+import styles from '../index.less';
 
 type DataItem = {
   id: number;
@@ -121,9 +122,8 @@ const Xqhz = () => {
   }, [dataListB]);
 
   return (
-    <div>
-      <div>title</div>
-      <Tabs centered type="card">
+    <div className={`${styles.xqhz} ${styles.tabSelf}`}>
+      <Tabs centered tabBarGutter={32} type="card">
         <Tabs.TabPane key="1" tab="行业需求汇总">
           <HighchartsReact highcharts={Highcharts} options={options} />
         </Tabs.TabPane>
