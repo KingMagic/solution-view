@@ -1,36 +1,38 @@
+import moment, { Moment } from 'moment';
+import { useEffect, useState } from 'react';
+import logo from '../images/logo.png';
 import Bzwtzl from './components/Bzwtzl';
-import Csrwzl from './components/Csrwzl';
-import Faxsqj from './components/Faxsqj';
-import Hyjjfafb from './components/Hyjjfafb';
-import Hyjjfafbx from './components/Hyjjfafbx';
-import Hyxsfb from './components/Hyxsfb';
-import Jjfaqj from './components/Jjfaqj';
-import SalesOverview from './components/SalesOverview';
-import Sthzywzl from './components/Sthzywzl';
-import Xqhz from './components/Xqhz';
-import Ydxqfb from './components/Ydxqfb';
-import Zjztzl from './components/Zjztzl';
-import styles from './index.less';
+import Xsqkzl from './components/Xsqkzl';
+import './index.less';
+
+moment.locale('zh-cn');
 
 export default function IndexPage() {
+  const [current, setCurrent] = useState<Moment>(moment());
+
+  useEffect(() => {
+    const clock = setInterval(() => setCurrent(moment()), 1000);
+    return () => clearInterval(clock);
+  }, []);
+
   return (
-    <div className={styles.app}>
-      <div className={styles.header}></div>
-      <div className={styles.container}>
-        <SalesOverview />
-        <Hyjjfafb />
-        <Hyjjfafbx />
-        <Sthzywzl />
-        <Bzwtzl />
-        <div className={styles.SolutionView}>
-          <Jjfaqj />
+    <div className="uc-wrap uc-home">
+      <header>
+        <div className="logo">
+          <img src={logo} alt="" />
         </div>
-        <Xqhz />
-        <Zjztzl />
-        <Ydxqfb />
-        <Csrwzl />
-        <Hyxsfb />
-        <Faxsqj />
+        <div className="g-clock date">
+          <span className="day">
+            <b></b>
+          </span>
+          <time>{current.format('YYYY-MM-DD HH:mm:ss dddd')}</time>
+          <span className="week"></span>
+        </div>
+      </header>
+
+      <div className="main-left">
+        <Xsqkzl />
+        <Bzwtzl />
       </div>
     </div>
   );

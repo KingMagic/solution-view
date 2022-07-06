@@ -1,7 +1,5 @@
 import { Tabs } from 'antd';
 import { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import { queryBzwtzl } from '../service';
 import styles from '../index.less';
 
@@ -115,16 +113,64 @@ const Bzwtzl = () => {
   }, [dataListA]);
 
   return (
-    <div className={`${styles.bzwtzl}  ${styles.tabSelf}`}>
-      <Tabs centered tabBarGutter={32} type="card">
-        <Tabs.TabPane key="1" tab="本周处理问题">
-          <HighchartsReact highcharts={Highcharts} options={options} />
-        </Tabs.TabPane>
-        <Tabs.TabPane key="2" tab="负向改进进展">
-          <HighchartsReact highcharts={Highcharts} options={optionsA} />
-        </Tabs.TabPane>
-      </Tabs>
-    </div>
+    <section className="box box2">
+      <h2>本周问题总览</h2>
+      <div className="g-filter">
+        <a href="" className="item w45 on">
+          本周处理问题
+        </a>
+        <a href="" className="item w45">
+          负向改进进展
+        </a>
+      </div>
+
+      <div className="g-filterBD">
+        <div className="tab-con">
+          <div className="uc-flex">
+            <div className="g-legend flex uc-ml20">
+              <div className="item">
+                <i className="dot" style={{ backgroundColor: '#682cea' }}></i>
+                体验类问题
+              </div>
+              <div className="item">
+                <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
+                质量问题
+              </div>
+            </div>
+            <div
+              id="containerPie2_1"
+              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+            ></div>
+          </div>
+        </div>
+        <div className="tab-con">
+          <div className="uc-flex">
+            <div className="g-legend flex uc-ml20">
+              <div className="item">
+                <i className="dot" style={{ backgroundColor: '#682cea' }}></i>
+                已接纳并落地
+              </div>
+              <div className="item">
+                <i className="dot" style={{ backgroundColor: '#2a7bf3' }}></i>
+                已接纳但未排进版本
+              </div>
+              <div className="item">
+                <i className="dot" style={{ backgroundColor: '#a5a5a5' }}></i>
+                退回
+              </div>
+              <div className="item">
+                <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
+                待处理
+              </div>
+            </div>
+            <div
+              id="containerPie2_2"
+              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
