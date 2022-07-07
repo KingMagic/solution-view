@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import {
   queryFangAnXiaoShou,
@@ -13,7 +13,9 @@ type DataItem = {
   TableType: string;
 };
 
-const optionPie1_1 = {
+const colorList = ['#682cea', '#2a7bf3', '#00e284', '#fd8c04', '#a5a5a5'];
+
+const defaultOptions1 = {
   grid: {
     left: '0%',
     right: '0%',
@@ -21,109 +23,163 @@ const optionPie1_1 = {
     top: '0%',
     containLabel: true,
   },
-  color: ['#682cea', '#2a7bf3', '#00e284', '#fd8c04', '#a5a5a5'],
+  color: colorList,
   tooltip: {
     trigger: 'item',
   },
-  series: [
-    {
-      name: '访问来源',
-      type: 'pie',
-      radius: ['40%', '80%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false,
-        position: 'center',
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: '12',
-          fontWeight: 'bold',
-          color: '#fff',
-        },
-      },
-      labelLine: {
-        show: false,
-      },
-      data: [
-        {
-          value: 20,
-          name: '医疗',
-        },
-        {
-          value: 30,
-          name: '商业市场',
-        },
-        {
-          value: 20,
-          name: '金融',
-        },
-        {
-          value: 20,
-          name: '教育',
-        },
-        {
-          value: 20,
-          name: '智能制造',
-        },
-      ],
-    },
-  ],
 };
 
 const Xsqkzl = () => {
-  const [clock, setClock] = useState(0);
-  const [options, setOptions] = useState<echarts.EChartsOption>();
+  const [tab, setTab] = useState(1);
+  const chartRef1 = useRef<HTMLDivElement>(null);
+  const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
+  const chartRef2 = useRef<HTMLDivElement>(null);
+  const [chartInstance2, setChartInstance2] = useState<echarts.ECharts>();
+  const chartRef3 = useRef<HTMLDivElement>(null);
+  const [chartInstance3, setChartInstance3] = useState<echarts.ECharts>();
+  const [hxxsDataList, setHyxsDataList] = useState<DataItem[]>([]);
+  const [faxsDataList, setFaxsDataList] = useState<DataItem[]>([]);
+
+  // init
+  useEffect(() => {
+    if (chartRef1.current) {
+      setChartInstance1(echarts.init(chartRef1.current));
+    }
+    if (chartRef2.current) {
+      setChartInstance2(echarts.init(chartRef2.current));
+    }
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => setClock((pre) => pre + 1), 1000);
+    if (chartInstance1) {
+      queryHangYeXiaoShou().then((res) => setHyxsDataList(res));
+    }
+    if (chartInstance2) {
+      queryFangAnXiaoShou().then((res) => setFaxsDataList(res));
+    }
+    const interval = setInterval(query, 3 * 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [chartInstance1]);
+
+  const query = () => {
+    queryHangYeXiaoShou().then((res) => setHyxsDataList(res));
+    queryFangAnXiaoShou().then((res) => setFaxsDataList(res));
+  };
 
   useEffect(() => {
-    var dom = document.getElementById('containerPie1_1');
-    var myChart = echarts.init(dom);
-    myChart.setOption(optionPie1_1, true);
-  }, []);
+    if (hxxsDataList.length > 0 && chartInstance1) {
+      chartInstance1.setOption({
+        ...defaultOptions1,
+        series: [
+          {
+            name: '行业销售情况',
+            type: 'pie',
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: hxxsDataList.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
+          },
+        ],
+      });
+    }
+  }, [hxxsDataList, chartInstance1]);
 
   useEffect(() => {
-    queryFangAnXiaoShou().then((res) => console.log(res));
-  }, []);
+    if (faxsDataList.length > 0 && chartInstance2) {
+      chartInstance2.setOption({
+        ...defaultOptions1,
+        series: [
+          {
+            name: '方案销售情况',
+            type: 'pie',
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: faxsDataList.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
+          },
+        ],
+      });
+    }
+  }, [faxsDataList, chartInstance2]);
 
   return (
     <section className="box box1">
       <h2>销售情况总览</h2>
       <div className="g-filter">
-        <a href="" className="item w45 on">
-          行业已销售情况
+        <a
+          onClick={() => setTab(1)}
+          className={`item w30 ${tab === 1 ? 'on' : undefined}`}
+        >
+          行业销售情况
         </a>
-        <a href="" className="item w45">
-          已售项目情况
+        <a
+          onClick={() => setTab(2)}
+          className={`item w30 ${tab === 2 ? 'on' : undefined}`}
+        >
+          方案销售情况
+        </a>
+        <a
+          onClick={() => setTab(3)}
+          className={`item w30 ${tab === 3 ? 'on' : undefined}`}
+        >
+          行业交付情况
         </a>
       </div>
 
       <div className="g-filterBD">
-        <div className="tab-con">
+        <div
+          className="tab-con"
+          style={{ display: tab === 1 ? 'block' : 'none' }}
+        >
           <div className="uc-flex">
-            <div className="g-legend flex uc-ml80 uc-mb20">
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#682cea' }}></i>
-                交付中
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
-                已交付
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#a5a5a5' }}></i>
-                待交付
-              </div>
+            <div
+              className="g-legend flex uc-mb20"
+              style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '40px' }}
+            >
+              {hxxsDataList.map((item, index) => (
+                <div
+                  className="item"
+                  key={item.ValueType}
+                  style={{ width: '50%' }}
+                >
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
             </div>
             <div
-              id="containerPie1_1"
-              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
+              ref={chartRef1}
+              style={{ width: '1.2rem', height: '1.5rem', margin: '0 .4rem' }}
+            />
           </div>
           <div className="operate">
             <a href="" className="btn">
@@ -132,29 +188,40 @@ const Xsqkzl = () => {
             </a>
           </div>
         </div>
-        <div className="tab-con">
+        <div
+          className="tab-con"
+          style={{ display: tab === 2 ? 'block' : 'none' }}
+        >
           <div className="uc-flex">
-            <div className="g-legend flex uc-ml80 uc-mb20">
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#682cea' }}></i>
-                行业宝
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
-                数字化办公
-              </div>
+            <div
+              className="g-legend flex uc-mb20"
+              style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '18px' }}
+            >
+              {faxsDataList.map((item, index) => (
+                <div
+                  className="item"
+                  key={item.ValueType}
+                  style={{ width: '50%' }}
+                >
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
             </div>
             <div
-              id="containerPie1_2"
-              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
+              ref={chartRef2}
+              style={{ width: '1.2rem', height: '1.5rem', margin: '0 .4rem' }}
+            />
           </div>
-          <div className="operate">
-            <a href="" className="btn">
-              <img src="images/home-icon-1.png" className="uc-icon16" alt="" />
-              行业线项目数
-            </a>
-          </div>
+        </div>
+        <div
+          className="tab-con"
+          style={{ display: tab === 3 ? 'block' : 'none' }}
+        >
+          test
         </div>
       </div>
     </section>
