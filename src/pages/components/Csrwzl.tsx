@@ -3,6 +3,7 @@ import * as echarts from 'echarts';
 import { queryCszl, queryFakf } from '../service';
 import { colorList, defaultOptions } from '../utils';
 import icon4 from '../../images/home-icon-4.png';
+import ModalLB from './ModalLB';
 
 type DataItem = {
   id: number;
@@ -33,6 +34,7 @@ const Csrwzl = () => {
   const [dataList1, setDataList1] = useState<DataItem[]>([]);
   const [dataList2, setDataList2] = useState<DataItem[]>([]);
   const [dataList3, setDataList3] = useState<DataItem[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   // init
   useEffect(() => {
@@ -59,7 +61,6 @@ const Csrwzl = () => {
     queryCszl('基线').then((res) => setDataList1(res));
     queryCszl('生态继承验证').then((res) => setDataList2(res));
     queryCszl('场景化需求').then((res) => setDataList3(res));
-    queryFakf().then((res) => console.log(res));
   };
 
   useEffect(() => {
@@ -187,104 +188,107 @@ const Csrwzl = () => {
   ];
 
   return (
-    <section className="box box4">
-      <h2>测试任务总览</h2>
-      <div className="g-filter">
-        <a
-          onClick={() => setTab(1)}
-          className={`item ${tab === 1 ? 'on' : undefined}`}
-        >
-          基线
-        </a>
-        <a
-          onClick={() => setTab(2)}
-          className={`item ${tab === 2 ? 'on' : undefined}`}
-        >
-          生态集成验证
-        </a>
-        <a
-          onClick={() => setTab(3)}
-          className={`item ${tab === 3 ? 'on' : undefined}`}
-        >
-          场景化需求
-        </a>
-      </div>
+    <>
+      <section className="box box4">
+        <h2>测试任务总览</h2>
+        <div className="g-filter">
+          <a
+            onClick={() => setTab(1)}
+            className={`item ${tab === 1 ? 'on' : undefined}`}
+          >
+            基线
+          </a>
+          <a
+            onClick={() => setTab(2)}
+            className={`item ${tab === 2 ? 'on' : undefined}`}
+          >
+            生态集成验证
+          </a>
+          <a
+            onClick={() => setTab(3)}
+            className={`item ${tab === 3 ? 'on' : undefined}`}
+          >
+            场景化需求
+          </a>
+        </div>
 
-      <div className="g-filterBD">
-        <div
-          className="tab-con"
-          style={{ display: tab === 1 ? 'block' : 'none' }}
-        >
-          <div className="uc-flex">
-            <div className="g-legend flex uc-ml20">
-              {dataList1.map((item, index) => (
-                <div className="item" key={item.ValueType}>
-                  <i
-                    className="dot"
-                    style={{ backgroundColor: colorList[index] }}
-                  ></i>
-                  {item.ValueType}
-                </div>
-              ))}
+        <div className="g-filterBD">
+          <div
+            className="tab-con"
+            style={{ display: tab === 1 ? 'block' : 'none' }}
+          >
+            <div className="uc-flex">
+              <div className="g-legend flex uc-ml20">
+                {dataList1.map((item, index) => (
+                  <div className="item" key={item.ValueType}>
+                    <i
+                      className="dot"
+                      style={{ backgroundColor: colorList[index] }}
+                    ></i>
+                    {item.ValueType}
+                  </div>
+                ))}
+              </div>
+              <div
+                ref={chartRef1}
+                style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+              ></div>
             </div>
-            <div
-              ref={chartRef1}
-              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
+            <div className="operate">
+              <a onClick={() => setShowModal(true)} className="btn">
+                <img src={icon4} className="uc-icon16" alt="" />
+                方案开发进展
+              </a>
+            </div>
           </div>
-          <div className="operate">
-            <a href="" className="btn">
-              <img src={icon4} className="uc-icon16" alt="" />
-              方案开发进展
-            </a>
+          <div
+            className="tab-con"
+            style={{ display: tab === 2 ? 'block' : 'none' }}
+          >
+            <div className="uc-flex">
+              <div className="g-legend flex uc-ml20">
+                {dataList2.map((item, index) => (
+                  <div className="item" key={item.ValueType}>
+                    <i
+                      className="dot"
+                      style={{ backgroundColor: colorList[index] }}
+                    ></i>
+                    {item.ValueType}
+                  </div>
+                ))}
+              </div>
+              <div
+                ref={chartRef2}
+                style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+              ></div>
+            </div>
+          </div>
+          <div
+            className="tab-con"
+            style={{ display: tab === 3 ? 'block' : 'none' }}
+          >
+            <div className="uc-flex">
+              <div className="g-legend flex uc-ml20">
+                {dataList3.map((item, index) => (
+                  <div className="item" key={item.ValueType}>
+                    <i
+                      className="dot"
+                      style={{ backgroundColor: colorList[index] }}
+                    ></i>
+                    {item.ValueType}
+                  </div>
+                ))}
+              </div>
+              <div
+                ref={chartRef3}
+                style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+              ></div>
+            </div>
           </div>
         </div>
-        <div
-          className="tab-con"
-          style={{ display: tab === 2 ? 'block' : 'none' }}
-        >
-          <div className="uc-flex">
-            <div className="g-legend flex uc-ml20">
-              {dataList2.map((item, index) => (
-                <div className="item" key={item.ValueType}>
-                  <i
-                    className="dot"
-                    style={{ backgroundColor: colorList[index] }}
-                  ></i>
-                  {item.ValueType}
-                </div>
-              ))}
-            </div>
-            <div
-              ref={chartRef2}
-              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
-          </div>
-        </div>
-        <div
-          className="tab-con"
-          style={{ display: tab === 3 ? 'block' : 'none' }}
-        >
-          <div className="uc-flex">
-            <div className="g-legend flex uc-ml20">
-              {dataList3.map((item, index) => (
-                <div className="item" key={item.ValueType}>
-                  <i
-                    className="dot"
-                    style={{ backgroundColor: colorList[index] }}
-                  ></i>
-                  {item.ValueType}
-                </div>
-              ))}
-            </div>
-            <div
-              ref={chartRef3}
-              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+      {showModal && <ModalLB onClose={() => setShowModal(false)} />}
+    </>
   );
 };
 
