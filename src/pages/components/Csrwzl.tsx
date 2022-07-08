@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import { useEffect, useRef, useState } from 'react';
+import * as echarts from 'echarts';
 import { queryCszl, queryFakf } from '../service';
-import styles from '../index.less';
-import { Button, Modal, Table, Tabs } from 'antd';
+import { colorList, defaultOptions } from '../utils';
+import icon4 from '../../images/home-icon-4.png';
 
 type DataItem = {
   id: number;
@@ -24,138 +23,137 @@ type TableDataItem = {
 };
 
 const Csrwzl = () => {
-  const [options, setOptions] = useState<Highcharts.Options>(); // 行业销售情况
-  const [optionsA, setOptionsA] = useState<Highcharts.Options>(); // 方案销售情况
-  const [optionsB, setOptionsB] = useState<Highcharts.Options>(); // 行业交付情况
-  const [dataList, setDatalist] = useState<DataItem[]>([]);
-  const [dataListA, setDatalistA] = useState<DataItem[]>([]);
-  const [dataListB, setDatalistB] = useState<DataItem[]>([]);
-  const [clock, setClock] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [tableDataList, setTableDataList] = useState<TableDataItem[]>([]);
+  const [tab, setTab] = useState(1);
+  const chartRef1 = useRef<HTMLDivElement>(null);
+  const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
+  const chartRef2 = useRef<HTMLDivElement>(null);
+  const [chartInstance2, setChartInstance2] = useState<echarts.ECharts>();
+  const chartRef3 = useRef<HTMLDivElement>(null);
+  const [chartInstance3, setChartInstance3] = useState<echarts.ECharts>();
+  const [dataList1, setDataList1] = useState<DataItem[]>([]);
+  const [dataList2, setDataList2] = useState<DataItem[]>([]);
+  const [dataList3, setDataList3] = useState<DataItem[]>([]);
 
+  // init
   useEffect(() => {
-    const interval = setInterval(() => setClock((pre) => pre + 1), 1000);
-    return () => clearInterval(interval);
+    if (chartRef1.current) {
+      setChartInstance1(echarts.init(chartRef1.current));
+    }
+    if (chartRef2.current) {
+      setChartInstance2(echarts.init(chartRef2.current));
+    }
+    if (chartRef3.current) {
+      setChartInstance3(echarts.init(chartRef3.current));
+    }
   }, []);
 
   useEffect(() => {
-    queryCszl('基线').then((res) => setDatalist(res));
-    queryCszl('生态继承验证').then((res) => setDatalistA(res));
-    queryCszl('场景化需求').then((res) => setDatalistB(res));
-    queryFakf().then((res) => setTableDataList(res));
-  }, []);
+    if (chartInstance1 && chartInstance2 && chartInstance3) {
+      query();
+      const interval = setInterval(query, 3 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [chartInstance1, chartInstance2, chartInstance3]);
+
+  const query = () => {
+    queryCszl('基线').then((res) => setDataList1(res));
+    queryCszl('生态继承验证').then((res) => setDataList2(res));
+    queryCszl('场景化需求').then((res) => setDataList3(res));
+    queryFakf().then((res) => console.log(res));
+  };
 
   useEffect(() => {
-    if (dataList.length > 0) {
-      setOptions({
-        title: {
-          text: undefined,
-        },
-        chart: {
-          backgroundColor: 'rgba(0,0,0,0)',
-        },
-        colors: ['#00E284', '#06479C', '#682CEA', '#ED7D31', '#A5A5A5'],
-        credits: {
-          enabled: false,
-        },
-        legend: {
-          align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemDistance: 48,
-        },
+    if (dataList1.length > 0 && chartInstance1) {
+      chartInstance1.setOption({
+        ...defaultOptions,
         series: [
           {
+            name: '基线',
             type: 'pie',
-            data: dataList.map((item, index) => ({
-              name: item.ValueType,
-              y: item.Value,
-            })),
-            dataLabels: {
-              enabled: false,
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
             },
-            innerSize: '40%',
-            showInLegend: true,
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: dataList1.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
     }
-  }, [dataList]);
+  }, [dataList1, chartInstance1]);
 
   useEffect(() => {
-    if (dataListA.length > 0) {
-      setOptionsA({
-        title: {
-          text: undefined,
-        },
-        chart: {
-          backgroundColor: 'rgba(0,0,0,0)',
-        },
-        colors: ['#00E284', '#06479C', '#682CEA', '#ED7D31', '#A5A5A5'],
-        credits: {
-          enabled: false,
-        },
-        legend: {
-          align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemDistance: 48,
-        },
+    if (dataList2.length > 0 && chartInstance2) {
+      chartInstance2.setOption({
+        ...defaultOptions,
         series: [
           {
+            name: '生态集成验证',
             type: 'pie',
-            data: dataListA.map((item, index) => ({
-              name: item.ValueType,
-              y: item.Value,
-            })),
-            dataLabels: {
-              enabled: false,
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
             },
-            innerSize: '40%',
-            showInLegend: true,
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: dataList2.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
     }
-  }, [dataListA]);
+  }, [dataList2, chartInstance2]);
 
   useEffect(() => {
-    if (dataListB.length > 0) {
-      setOptionsB({
-        title: {
-          text: undefined,
-        },
-        chart: {
-          backgroundColor: 'rgba(0,0,0,0)',
-        },
-        colors: ['#00E284', '#06479C', '#682CEA', '#ED7D31', '#A5A5A5'],
-        credits: {
-          enabled: false,
-        },
-        legend: {
-          align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemDistance: 48,
-        },
+    if (dataList3.length > 0 && chartInstance3) {
+      chartInstance3.setOption({
+        ...defaultOptions,
         series: [
           {
+            name: '场景化需求',
             type: 'pie',
-            data: dataListB.map((item, index) => ({
-              name: item.ValueType,
-              y: item.Value,
-            })),
-            dataLabels: {
-              enabled: false,
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
             },
-            innerSize: '40%',
-            showInLegend: true,
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: dataList3.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
     }
-  }, [dataListB]);
+  }, [dataList3, chartInstance3]);
 
   const columns = [
     {
@@ -189,36 +187,104 @@ const Csrwzl = () => {
   ];
 
   return (
-    <div>
-      <div>title</div>
-      <Tabs centered type="card">
-        <Tabs.TabPane key="1" tab="基线">
-          <HighchartsReact highcharts={Highcharts} options={options} />
-          <Button onClick={() => setShowModal(true)}>方案开发进展</Button>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="2" tab="生态集成验证">
-          <HighchartsReact highcharts={Highcharts} options={optionsA} />
-        </Tabs.TabPane>
-        <Tabs.TabPane key="3" tab="场景化需求">
-          <HighchartsReact highcharts={Highcharts} options={optionsB} />
-        </Tabs.TabPane>
-      </Tabs>
-      {showModal && (
-        <Modal
-          footer={null}
-          onCancel={() => setShowModal(false)}
-          title="方案开发进展"
-          visible
+    <section className="box box4">
+      <h2>测试任务总览</h2>
+      <div className="g-filter">
+        <a
+          onClick={() => setTab(1)}
+          className={`item ${tab === 1 ? 'on' : undefined}`}
         >
-          <Table
-            columns={columns}
-            dataSource={tableDataList}
-            rowKey="id"
-            pagination={false}
-          />
-        </Modal>
-      )}
-    </div>
+          基线
+        </a>
+        <a
+          onClick={() => setTab(2)}
+          className={`item ${tab === 2 ? 'on' : undefined}`}
+        >
+          生态集成验证
+        </a>
+        <a
+          onClick={() => setTab(3)}
+          className={`item ${tab === 3 ? 'on' : undefined}`}
+        >
+          场景化需求
+        </a>
+      </div>
+
+      <div className="g-filterBD">
+        <div
+          className="tab-con"
+          style={{ display: tab === 1 ? 'block' : 'none' }}
+        >
+          <div className="uc-flex">
+            <div className="g-legend flex uc-ml20">
+              {dataList1.map((item, index) => (
+                <div className="item" key={item.ValueType}>
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
+            </div>
+            <div
+              ref={chartRef1}
+              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+            ></div>
+          </div>
+          <div className="operate">
+            <a href="" className="btn">
+              <img src={icon4} className="uc-icon16" alt="" />
+              方案开发进展
+            </a>
+          </div>
+        </div>
+        <div
+          className="tab-con"
+          style={{ display: tab === 2 ? 'block' : 'none' }}
+        >
+          <div className="uc-flex">
+            <div className="g-legend flex uc-ml20">
+              {dataList2.map((item, index) => (
+                <div className="item" key={item.ValueType}>
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
+            </div>
+            <div
+              ref={chartRef2}
+              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+            ></div>
+          </div>
+        </div>
+        <div
+          className="tab-con"
+          style={{ display: tab === 3 ? 'block' : 'none' }}
+        >
+          <div className="uc-flex">
+            <div className="g-legend flex uc-ml20">
+              {dataList3.map((item, index) => (
+                <div className="item" key={item.ValueType}>
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
+            </div>
+            <div
+              ref={chartRef3}
+              style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

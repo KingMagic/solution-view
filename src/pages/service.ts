@@ -78,6 +78,10 @@ const queryJjfaqj = () => {
   return request(preUrl + '/FangAnQuanJing');
 };
 
+const queryHyxszb = () => {
+  return request(preUrl + '/HangYeXiaoShouZhanBi');
+};
+
 export {
   queryHangYeXiaoShou,
   queryFangAnXiaoShou,
@@ -93,4 +97,5 @@ export {
   queryFakf,
   queryFaxsqj,
   queryJjfaqj,
+  queryHyxszb,
 };

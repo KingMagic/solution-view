@@ -1,7 +1,7 @@
-import { Image, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import { queryZhenji } from '../service';
-import styles from '../index.less';
+import green from '../../images/status-green.png';
+import red from '../../images/status-red.png';
 
 type DataItem = {
   id: number;
@@ -15,53 +15,41 @@ const Zjztzl = () => {
   const [dataList, setDataList] = useState<DataItem[]>();
 
   useEffect(() => {
-    queryZhenji().then((res) => setDataList(res));
+    query();
+    const interval = setInterval(query, 3 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
-  const columns = [
-    {
-      title: '地点',
-      dataIndex: 'DiDian',
-    },
-    {
-      title: 'NO',
-      dataIndex: 'No',
-    },
-    {
-      title: '上线状态',
-      dataIndex: 'Status',
-      render: (status: boolean) =>
-        status ? (
-          <div className={styles.redLight} />
-        ) : (
-          <div className={styles.greenLight} />
-        ),
-    },
-    {
-      title: '对接伙伴',
-      dataIndex: 'YiWanCheng',
-    },
-  ];
+  const query = () => queryZhenji().then((res) => setDataList(res));
 
   return (
-    <div className={styles.zjztzl}>
-      <Table
-        style={{ padding: '0px 24px' }}
-        columns={columns}
-        dataSource={dataList}
-        rowClassName={(record, index) =>
-          index % 2 === 1 ? styles.dark : styles.light
-        }
-        rowKey="id"
-        pagination={false}
-        onHeaderRow={() => ({
-          className: styles.tabelHeader,
-        })}
-        onRow={() => ({
-          onMouseOver: undefined,
-        })}
-      />
-    </div>
+    <section className="box box3">
+      <h2>真机状态总览</h2>
+      <div className="table">
+        <table>
+          <tr>
+            <th>地点</th>
+            <th>NO</th>
+            <th>上线状态</th>
+            <th>对接伙伴</th>
+          </tr>
+          {dataList?.map((item) => (
+            <tr key={item.No}>
+              <td>{item.DiDian}</td>
+              <td>{item.No}</td>
+              <td>
+                <img
+                  src={item.Status ? green : red}
+                  className="uc-icon16"
+                  alt=""
+                />
+              </td>
+              <td>{item.YiWanCheng}</td>
+            </tr>
+          ))}
+        </table>
+      </div>
+    </section>
   );
 };
 

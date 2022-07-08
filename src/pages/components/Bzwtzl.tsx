@@ -1,7 +1,6 @@
-import { Tabs } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import * as echarts from 'echarts';
 import { queryBzwtzl } from '../service';
-import styles from '../index.less';
 
 type DataItem = {
   id: number;
@@ -10,161 +9,178 @@ type DataItem = {
   TableType: string;
 };
 
+const colorList = ['#682cea', '#2a7bf3', '#00e284', '#fd8c04', '#a5a5a5'];
+
+const defaultOptions1 = {
+  grid: {
+    left: '0%',
+    right: '0%',
+    bottom: '0%',
+    top: '0%',
+    containLabel: true,
+  },
+  color: colorList,
+  tooltip: {
+    trigger: 'item',
+  },
+};
+
 const Bzwtzl = () => {
-  const [options, setOptions] = useState<Highcharts.Options>(); // 行业销售情况
-  const [dataList, setDatalist] = useState<DataItem[]>([]);
-  const [optionsA, setOptionsA] = useState<Highcharts.Options>(); // 方案销售情况
-  const [dataListA, setDataListA] = useState<DataItem[]>([]);
-  const [clock, setClock] = useState(0);
+  const [tab, setTab] = useState(1);
+  const chartRef1 = useRef<HTMLDivElement>(null);
+  const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
+  const chartRef2 = useRef<HTMLDivElement>(null);
+  const [chartInstance2, setChartInstance2] = useState<echarts.ECharts>();
+  const [dataList1, setDataList1] = useState<DataItem[]>([]);
+  const [dataList2, setDataList2] = useState<DataItem[]>([]);
+
+  // init
+  useEffect(() => {
+    if (chartRef1.current) {
+      setChartInstance1(echarts.init(chartRef1.current));
+    }
+    if (chartRef2.current) {
+      setChartInstance2(echarts.init(chartRef2.current));
+    }
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => setClock((pre) => pre + 1), 1000);
+    if (chartInstance1) {
+      queryBzwtzl('本周处理问题').then((res) => setDataList1(res));
+    }
+    if (chartInstance2) {
+      queryBzwtzl('负向改进').then((res) => setDataList2(res));
+    }
+    const interval = setInterval(query, 3 * 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [chartInstance1, chartInstance2]);
+
+  const query = () => {
+    queryBzwtzl('本周处理问题').then((res) => setDataList1(res));
+    queryBzwtzl('负向改进').then((res) => setDataList2(res));
+  };
 
   useEffect(() => {
-    queryBzwtzl('本周处理问题').then((res) => setDatalist(res));
-    queryBzwtzl('负向改进').then((res) => setDataListA(res));
-  }, []);
-
-  useEffect(() => {
-    if (dataList.length > 0) {
-      setOptions({
-        title: {
-          text: undefined,
-        },
-        chart: {
-          backgroundColor: 'rgba(0,0,0,0)',
-        },
-        colors: ['#00E284', '#06479C', '#682CEA', '#ED7D31', '#A5A5A5'],
-        credits: {
-          enabled: false,
-        },
-        legend: {
-          align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemStyle: {
-            color: '#ffffff',
-            fontSize: '16px',
-          },
-          x: 100,
-        },
+    if (dataList1.length > 0 && chartInstance1) {
+      chartInstance1.setOption({
+        ...defaultOptions1,
         series: [
           {
+            name: '本周处理问题',
             type: 'pie',
-            data: dataList.map((item, index) => ({
-              name: item.ValueType,
-              y: item.Value,
-            })),
-            dataLabels: {
-              enabled: false,
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
             },
-            innerSize: '40%',
-            showInLegend: true,
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: dataList1.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
     }
-  }, [dataList]);
+  }, [dataList1, chartInstance1]);
 
   useEffect(() => {
-    if (dataListA.length > 0) {
-      setOptionsA({
-        title: {
-          text: undefined,
-        },
-        chart: {
-          backgroundColor: 'rgba(0,0,0,0)',
-        },
-        colors: ['#00E284', '#06479C', '#682CEA', '#ED7D31', '#A5A5A5'],
-        credits: {
-          enabled: false,
-        },
-        legend: {
-          align: 'left',
-          layout: 'vertical',
-          verticalAlign: 'middle',
-          itemStyle: {
-            color: '#ffffff',
-            fontSize: '16px',
-          },
-          x: 100,
-        },
-        tooltip: {
-          enabled: false,
-        },
+    if (dataList2.length > 0 && chartInstance2) {
+      chartInstance2.setOption({
+        ...defaultOptions1,
         series: [
           {
+            name: '负向改进进展',
             type: 'pie',
-            data: dataListA.map((item, index) => ({
-              name: item.ValueType,
-              y: item.Value,
-            })),
-            dataLabels: {
-              enabled: false,
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
             },
-            innerSize: '40%',
-            showInLegend: true,
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
+              },
+            },
+            data: dataList2.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
     }
-  }, [dataListA]);
+  }, [dataList2, chartInstance2]);
 
   return (
     <section className="box box2">
       <h2>本周问题总览</h2>
       <div className="g-filter">
-        <a href="" className="item w45 on">
+        <a
+          onClick={() => setTab(1)}
+          className={`item w45 ${tab === 1 ? 'on' : undefined}`}
+        >
           本周处理问题
         </a>
-        <a href="" className="item w45">
+        <a
+          onClick={() => setTab(2)}
+          className={`item w45 ${tab === 2 ? 'on' : undefined}`}
+        >
           负向改进进展
         </a>
       </div>
 
       <div className="g-filterBD">
-        <div className="tab-con">
+        <div
+          className="tab-con"
+          style={{ display: tab === 1 ? 'block' : 'none' }}
+        >
           <div className="uc-flex">
             <div className="g-legend flex uc-ml20">
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#682cea' }}></i>
-                体验类问题
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
-                质量问题
-              </div>
+              {dataList1.map((item, index) => (
+                <div className="item" key={item.ValueType}>
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
             </div>
             <div
-              id="containerPie2_1"
+              ref={chartRef1}
               style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
             ></div>
           </div>
         </div>
-        <div className="tab-con">
+        <div
+          className="tab-con"
+          style={{ display: tab === 2 ? 'block' : 'none' }}
+        >
           <div className="uc-flex">
             <div className="g-legend flex uc-ml20">
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#682cea' }}></i>
-                已接纳并落地
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#2a7bf3' }}></i>
-                已接纳但未排进版本
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#a5a5a5' }}></i>
-                退回
-              </div>
-              <div className="item">
-                <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
-                待处理
-              </div>
+              {dataList2.map((item, index) => (
+                <div className="item" key={item.ValueType}>
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
             </div>
             <div
-              id="containerPie2_2"
+              ref={chartRef2}
               style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
             ></div>
           </div>
