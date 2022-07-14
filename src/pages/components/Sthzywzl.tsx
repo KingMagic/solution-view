@@ -104,10 +104,10 @@ const Sthzywzl = () => {
               color: '#ffffff',
               rich: {
                 value: {
-                  fontSize: 32,
+                  fontSize: '.4rem',
                 },
                 title: {
-                  fontSize: 18,
+                  fontSize: '.2rem',
                 },
               },
             },
@@ -146,10 +146,10 @@ const Sthzywzl = () => {
               color: '#ffffff',
               rich: {
                 value: {
-                  fontSize: 32,
+                  fontSize: '.4rem',
                 },
                 title: {
-                  fontSize: 18,
+                  fontSize: '.2rem',
                 },
               },
             },
@@ -175,13 +175,13 @@ const Sthzywzl = () => {
           onClick={() => setTab(1)}
           className={`item w30 ${tab === 1 ? 'on' : undefined}`}
         >
-          数据统计
+          合作伙伴汇总
         </a>
         <a
           onClick={() => setTab(2)}
           className={`item w30 ${tab === 2 ? 'on' : undefined}`}
         >
-          汇总
+          合作类型占比
         </a>
       </div>
       <div className="g-filterBD">
@@ -211,12 +211,12 @@ const Sthzywzl = () => {
           <div className="uc-flex">
             <div
               className="g-legend flex"
-              style={{ display: 'flex', flexWrap: 'wrap' }}
+              style={{ display: 'flex', flexWrap: 'wrap', marginTop: '0.1rem' }}
             >
               {dataList1.map((item, index) => (
                 <div
                   className="item"
-                  style={{ width: '50%' }}
+                  style={{ width: '50%', marginBottom: '0.1rem' }}
                   key={item.ValueType}
                 >
                   <i

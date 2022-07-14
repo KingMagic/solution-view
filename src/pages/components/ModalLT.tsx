@@ -35,7 +35,7 @@ const ModalLT = (props: any) => {
           },
           series: [
             {
-              name: '访问来源',
+              name: '中标数',
               type: 'pie',
               radius: ['40%', '80%'],
               avoidLabelOverlap: false,

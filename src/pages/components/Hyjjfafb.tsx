@@ -136,7 +136,7 @@ const Hyjjfafb = () => {
         ],
         series: [
           {
-            name: '计划完成',
+            name: '待发布',
             type: 'bar',
             data: dataList2.map((child) => child.Undone),
             itemStyle: {
@@ -148,7 +148,7 @@ const Hyjjfafb = () => {
             barWidth: 12,
           },
           {
-            name: '已完成',
+            name: '已发布',
             type: 'bar',
             data: dataList2.map((child) => child.Finish),
             itemStyle: {
@@ -191,11 +191,11 @@ const Hyjjfafb = () => {
           <div className="g-legend uc-flex">
             <div className="item">
               <i className="dot" style={{ backgroundColor: '#2a7bf3' }}></i>
-              计划完成
+              待发布
             </div>
             <div className="item">
               <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
-              已完成
+              已发布
             </div>
           </div>
           <h2>行业解决方案发布</h2>

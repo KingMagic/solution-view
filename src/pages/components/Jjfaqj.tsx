@@ -60,7 +60,7 @@ const Jjfaqj = () => {
       <div className="item i3">
         <img src={img63} alt="" className="uc-icon40" />
         <div className="con">
-          <p>未发布方案</p>
+          <p>待发布方案</p>
           <div
             className="number timer2"
             data-from="0"
@@ -68,7 +68,7 @@ const Jjfaqj = () => {
             data-speed="5000"
             data-refresh-interval="50"
           >
-            {data.find((item) => item.ValueType === '未发布方案')?.Value}
+            {data.find((item) => item.ValueType === '待发布方案')?.Value}
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@ const Jjfaqj = () => {
           <img src={home61} className="d" alt="" />
         </div>
         <div className="con">
-          <p>需求总数</p>
+          <p>行业总数</p>
           <div
             className="number timer2"
             data-from="0"
@@ -102,7 +102,7 @@ const Jjfaqj = () => {
             data-speed="5000"
             data-refresh-interval="50"
           >
-            {data.find((item) => item.ValueType === '需求总数')?.Value}
+            {data.find((item) => item.ValueType === '行业总数')?.Value}
           </div>
         </div>
       </div>

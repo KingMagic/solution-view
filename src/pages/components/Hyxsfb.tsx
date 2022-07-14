@@ -363,7 +363,7 @@ const Hyxsfb = () => {
               onClick={() => setTab(3)}
               className={`item ${tab === 3 ? 'on' : undefined}`}
             >
-              智慧教师方案销售全景
+              智慧教室方案销售全景
             </a>
             <a
               onClick={() => setTab(4)}

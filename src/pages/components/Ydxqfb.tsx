@@ -134,12 +134,6 @@ const Ydxqfb = () => {
   return (
     <section className="box box10">
       <h2>月度需求分布</h2>
-      <div className="g-legend uc-flex end">
-        <div className="item">
-          <i className="dot" style={{ backgroundColor: '#06479e' }}></i>
-          月度需求分布
-        </div>
-      </div>
       <div ref={chartRef1} style={{ width: '100%', height: '1.5rem' }}></div>
     </section>
   );

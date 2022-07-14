@@ -105,8 +105,6 @@ const Xqhz = () => {
               textStyle: {
                 color: '#ffffff',
               },
-              interval: 0,
-              rotate: -30,
             },
           },
         ],
@@ -239,45 +237,27 @@ const Xqhz = () => {
           className="tab-con"
           style={{ display: tab === 1 ? 'block' : 'none' }}
         >
-          <div className="g-legend uc-flex end">
-            <div className="item">
-              <i className="dot" style={{ backgroundColor: '#06479e' }}></i>
-              行业需求汇总
-            </div>
-          </div>
           <div
             ref={chartRef1}
-            style={{ width: '4rem', height: '1.3rem' }}
+            style={{ width: '4rem', height: '1.5rem' }}
           ></div>
         </div>
         <div
           className="tab-con"
           style={{ display: tab === 2 ? 'block' : 'none' }}
         >
-          <div className="g-legend uc-flex end">
-            <div className="item">
-              <i className="dot" style={{ backgroundColor: '#06479e' }}></i>
-              需求类型汇总
-            </div>
-          </div>
           <div
             ref={chartRef2}
-            style={{ width: '4rem', height: '1.3rem' }}
+            style={{ width: '4rem', height: '1.5rem' }}
           ></div>
         </div>
         <div
           className="tab-con"
           style={{ display: tab === 3 ? 'block' : 'none' }}
         >
-          <div className="g-legend uc-flex end">
-            <div className="item">
-              <i className="dot" style={{ backgroundColor: '#06479e' }}></i>
-              需求状态汇总
-            </div>
-          </div>
           <div
             ref={chartRef3}
-            style={{ width: '4rem', height: '1.3rem' }}
+            style={{ width: '4rem', height: '1.5rem' }}
           ></div>
         </div>
       </div>

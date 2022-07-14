@@ -35,10 +35,13 @@ const Xqld = () => {
           </li>
         ))}
       </ul>
-      <div className="operate">
+      <div
+        className="operate"
+        style={{ position: 'relative', bottom: '.1rem' }}
+      >
         <a className="btn">
           <img src={icon} className="uc-icon16" alt="" />
-          行业线项目数
+          点击查看详情
         </a>
       </div>
     </section>
