@@ -13,8 +13,12 @@ const colorList = [
   '#2a7bf3',
   '#00e284',
   '#fd8c04',
-  '#a5a5a5',
-  '#875b26',
+  '#25a145',
+  '#a71b16',
+  '#3772c0',
+  '#98c204',
+  '#77d1d2',
+  '#12e190',
 ];
 const defaultOptions = {
   grid: {
@@ -26,8 +30,52 @@ const defaultOptions = {
   },
   color: colorList,
   tooltip: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    textStyle: {
+      color: '#ffffff',
+    },
     trigger: 'item',
   },
 };
 
-export { colorList, defaultOptions };
+const defaultOptions2 = {
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '5%',
+    top: '5%',
+    containLabel: true,
+  },
+  tooltip: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    textStyle: {
+      color: '#ffffff',
+    },
+    trigger: 'axis',
+  },
+  yAxis: [
+    {
+      // show:false,
+      axisLabel: {
+        show: true,
+        textStyle: {
+          color: '#ffffff',
+        },
+      },
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: '#ffffff',
+        },
+      },
+      splitLine: {
+        show: false,
+        lineStyle: {
+          color: '#d5d5d5',
+        },
+      },
+    },
+  ],
+};
+
+export { colorList, defaultOptions, defaultOptions2 };

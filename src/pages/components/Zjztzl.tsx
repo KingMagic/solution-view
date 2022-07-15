@@ -16,7 +16,7 @@ const Zjztzl = () => {
 
   useEffect(() => {
     query();
-    const interval = setInterval(query, 3 * 1000);
+    const interval = setInterval(query, 30 * 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -25,7 +25,7 @@ const Zjztzl = () => {
   return (
     <section className="box box3">
       <h2>真机状态总览</h2>
-      <div className="table">
+      <div className="table" style={{ height: '1.6rem', overflow: 'auto' }}>
         <table>
           <tr>
             <th>地点</th>

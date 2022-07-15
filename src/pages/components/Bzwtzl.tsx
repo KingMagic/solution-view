@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { queryBzwtzl } from '../service';
+import { defaultOptions } from '../utils';
 
 type DataItem = {
   id: number;
@@ -11,22 +12,8 @@ type DataItem = {
 
 const colorList = ['#682cea', '#2a7bf3', '#00e284', '#fd8c04', '#a5a5a5'];
 
-const defaultOptions1 = {
-  grid: {
-    left: '0%',
-    right: '0%',
-    bottom: '0%',
-    top: '0%',
-    containLabel: true,
-  },
-  color: colorList,
-  tooltip: {
-    trigger: 'item',
-  },
-};
-
 const Bzwtzl = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
@@ -45,13 +32,18 @@ const Bzwtzl = () => {
   }, []);
 
   useEffect(() => {
+    const interval = setInterval(() => setTab((tab + 1) % 2), 45 * 1000);
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  useEffect(() => {
     if (chartInstance1) {
       queryBzwtzl('本周处理问题').then((res) => setDataList1(res));
     }
     if (chartInstance2) {
       queryBzwtzl('负向改进').then((res) => setDataList2(res));
     }
-    const interval = setInterval(query, 3 * 1000);
+    const interval = setInterval(query, 30 * 1000);
     return () => clearInterval(interval);
   }, [chartInstance1, chartInstance2]);
 
@@ -63,10 +55,10 @@ const Bzwtzl = () => {
   useEffect(() => {
     if (dataList1.length > 0 && chartInstance1) {
       chartInstance1.setOption({
-        ...defaultOptions1,
+        ...defaultOptions,
         series: [
           {
-            name: '本周处理问题',
+            name: '问题数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -94,10 +86,10 @@ const Bzwtzl = () => {
   useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
       chartInstance2.setOption({
-        ...defaultOptions1,
+        ...defaultOptions,
         series: [
           {
-            name: '负向改进进展',
+            name: '问题数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -127,14 +119,14 @@ const Bzwtzl = () => {
       <h2>本周问题总览</h2>
       <div className="g-filter">
         <a
-          onClick={() => setTab(1)}
-          className={`item w45 ${tab === 1 ? 'on' : undefined}`}
+          onClick={() => setTab(0)}
+          className={`item w45 ${tab === 0 ? 'on' : undefined}`}
         >
           本周处理问题
         </a>
         <a
-          onClick={() => setTab(2)}
-          className={`item w45 ${tab === 2 ? 'on' : undefined}`}
+          onClick={() => setTab(1)}
+          className={`item w45 ${tab === 1 ? 'on' : undefined}`}
         >
           负向改进进展
         </a>
@@ -143,7 +135,7 @@ const Bzwtzl = () => {
       <div className="g-filterBD">
         <div
           className="tab-con"
-          style={{ display: tab === 1 ? 'block' : 'none' }}
+          style={{ display: tab === 0 ? 'block' : 'none' }}
         >
           <div className="uc-flex">
             <div className="g-legend flex uc-ml20">
@@ -160,12 +152,12 @@ const Bzwtzl = () => {
             <div
               ref={chartRef1}
               style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
+            />
           </div>
         </div>
         <div
           className="tab-con"
-          style={{ display: tab === 2 ? 'block' : 'none' }}
+          style={{ display: tab === 1 ? 'block' : 'none' }}
         >
           <div className="uc-flex">
             <div className="g-legend flex uc-ml20">
@@ -182,7 +174,7 @@ const Bzwtzl = () => {
             <div
               ref={chartRef2}
               style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-            ></div>
+            />
           </div>
         </div>
       </div>

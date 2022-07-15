@@ -28,6 +28,10 @@ const defaultOptions2 = {
     containLabel: true,
   },
   tooltip: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    textStyle: {
+      color: '#ffffff',
+    },
     trigger: 'axis',
   },
   yAxis: [
@@ -56,7 +60,7 @@ const defaultOptions2 = {
 };
 
 const Xsqkzl = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
@@ -82,9 +86,14 @@ const Xsqkzl = () => {
   }, []);
 
   useEffect(() => {
+    const interval = setInterval(() => setTab((tab + 1) % 3), 45 * 1000);
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  useEffect(() => {
     if (chartInstance1 && chartInstance2 && chartInstance3) {
       query();
-      const interval = setInterval(query, 3 * 1000);
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1, chartInstance2, chartInstance3]);
@@ -99,9 +108,10 @@ const Xsqkzl = () => {
     if (hxxsDataList.length > 0 && chartInstance1) {
       chartInstance1.setOption({
         ...defaultOptions,
+        selectedMode: 'multiple',
         series: [
           {
-            name: '行业销售情况',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -123,6 +133,10 @@ const Xsqkzl = () => {
           },
         ],
       });
+      chartInstance1.dispatchAction({
+        type: 'highlight',
+        dataIndex: 2,
+      });
     }
   }, [hxxsDataList, chartInstance1]);
 
@@ -132,7 +146,7 @@ const Xsqkzl = () => {
         ...defaultOptions,
         series: [
           {
-            name: '方案销售情况',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -205,20 +219,20 @@ const Xsqkzl = () => {
         <h2>销售情况总览</h2>
         <div className="g-filter">
           <a
-            onClick={() => setTab(1)}
-            className={`item w30 ${tab === 1 ? 'on' : undefined}`}
+            onClick={() => setTab(0)}
+            className={`item w30 ${tab === 0 ? 'on' : undefined}`}
           >
             行业销售情况
           </a>
           <a
-            onClick={() => setTab(2)}
-            className={`item w30 ${tab === 2 ? 'on' : undefined}`}
+            onClick={() => setTab(1)}
+            className={`item w30 ${tab === 1 ? 'on' : undefined}`}
           >
             方案销售情况
           </a>
           <a
-            onClick={() => setTab(3)}
-            className={`item w30 ${tab === 3 ? 'on' : undefined}`}
+            onClick={() => setTab(2)}
+            className={`item w30 ${tab === 2 ? 'on' : undefined}`}
           >
             行业交付情况
           </a>
@@ -227,7 +241,7 @@ const Xsqkzl = () => {
         <div className="g-filterBD">
           <div
             className="tab-con"
-            style={{ display: tab === 1 ? 'block' : 'none' }}
+            style={{ display: tab === 0 ? 'block' : 'none' }}
           >
             <div className="uc-flex">
               <div
@@ -266,7 +280,7 @@ const Xsqkzl = () => {
           </div>
           <div
             className="tab-con"
-            style={{ display: tab === 2 ? 'block' : 'none' }}
+            style={{ display: tab === 1 ? 'block' : 'none' }}
           >
             <div className="uc-flex">
               <div
@@ -299,7 +313,7 @@ const Xsqkzl = () => {
           </div>
           <div
             className="tab-con"
-            style={{ display: tab === 3 ? 'block' : 'none' }}
+            style={{ display: tab === 2 ? 'block' : 'none' }}
           >
             <div className="uc-flex">
               <div className="g-legend uc-flex end">

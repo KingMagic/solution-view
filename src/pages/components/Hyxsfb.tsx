@@ -11,7 +11,7 @@ type DataItem = {
 };
 
 const Hyxsfb = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
@@ -48,6 +48,11 @@ const Hyxsfb = () => {
   }, []);
 
   useEffect(() => {
+    const interval = setInterval(() => setTab((tab + 1) % 4), 45 * 1000);
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  useEffect(() => {
     if (
       chartInstance1 &&
       chartInstance2 &&
@@ -56,7 +61,7 @@ const Hyxsfb = () => {
       chartInstance5
     ) {
       query();
-      const interval = setInterval(query, 3 * 1000);
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [
@@ -81,7 +86,7 @@ const Hyxsfb = () => {
         ...defaultOptions,
         series: [
           {
-            name: '行业销售分布',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -112,7 +117,7 @@ const Hyxsfb = () => {
         ...defaultOptions,
         series: [
           {
-            name: '解决方案销售分布',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -143,7 +148,7 @@ const Hyxsfb = () => {
         ...defaultOptions,
         series: [
           {
-            name: '解决方案销售分布',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -174,7 +179,7 @@ const Hyxsfb = () => {
         ...defaultOptions,
         series: [
           {
-            name: '解决方案销售分布',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -205,7 +210,7 @@ const Hyxsfb = () => {
         ...defaultOptions,
         series: [
           {
-            name: '解决方案销售分布',
+            name: '项目数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -258,7 +263,7 @@ const Hyxsfb = () => {
           <div className="g-filterBD flex">
             <div
               className="tab-con"
-              style={{ display: tab === 1 ? 'block' : 'none' }}
+              style={{ display: tab === 0 ? 'block' : 'none' }}
             >
               <div className="uc-flex">
                 <div
@@ -280,7 +285,7 @@ const Hyxsfb = () => {
             </div>
             <div
               className="tab-con"
-              style={{ display: tab === 2 ? 'block' : 'none' }}
+              style={{ display: tab === 1 ? 'block' : 'none' }}
             >
               <div className="uc-flex">
                 <div
@@ -302,7 +307,7 @@ const Hyxsfb = () => {
             </div>
             <div
               className="tab-con"
-              style={{ display: tab === 3 ? 'block' : 'none' }}
+              style={{ display: tab === 2 ? 'block' : 'none' }}
             >
               <div className="uc-flex">
                 <div
@@ -324,7 +329,7 @@ const Hyxsfb = () => {
             </div>
             <div
               className="tab-con"
-              style={{ display: tab === 4 ? 'block' : 'none' }}
+              style={{ display: tab === 3 ? 'block' : 'none' }}
             >
               <div className="uc-flex">
                 <div
@@ -348,26 +353,26 @@ const Hyxsfb = () => {
 
           <div className="g-filter style2">
             <a
+              onClick={() => setTab(0)}
+              className={`item ${tab === 0 ? 'on' : undefined}`}
+            >
+              解决方案销售全景
+            </a>
+            <a
               onClick={() => setTab(1)}
               className={`item ${tab === 1 ? 'on' : undefined}`}
             >
-              解决方案销售全景
+              行业宝方案销售全景
             </a>
             <a
               onClick={() => setTab(2)}
               className={`item ${tab === 2 ? 'on' : undefined}`}
             >
-              行业宝方案销售全景
-            </a>
-            <a
-              onClick={() => setTab(3)}
-              className={`item ${tab === 3 ? 'on' : undefined}`}
-            >
               智慧教室方案销售全景
             </a>
             <a
-              onClick={() => setTab(4)}
-              className={`item line-two ${tab === 4 ? 'on' : undefined}`}
+              onClick={() => setTab(3)}
+              className={`item line-two ${tab === 3 ? 'on' : undefined}`}
             >
               商业市场数字化办公
               <br />

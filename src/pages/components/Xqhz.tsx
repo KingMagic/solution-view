@@ -19,6 +19,10 @@ const defaultOptions2 = {
     containLabel: true,
   },
   tooltip: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    textStyle: {
+      color: '#ffffff',
+    },
     trigger: 'axis',
   },
   yAxis: [
@@ -47,7 +51,7 @@ const defaultOptions2 = {
 };
 
 const Xqhz = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
@@ -72,9 +76,14 @@ const Xqhz = () => {
   }, []);
 
   useEffect(() => {
+    const interval = setInterval(() => setTab((tab + 1) % 3), 45 * 1000);
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  useEffect(() => {
     if (chartInstance1 && chartInstance2 && chartInstance3) {
       query();
-      const interval = setInterval(query, 3 * 1000);
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1, chartInstance2, chartInstance3]);
@@ -88,37 +97,28 @@ const Xqhz = () => {
   useEffect(() => {
     if (dataList1.length > 0 && chartInstance1) {
       chartInstance1.setOption({
-        ...defaultOptions2,
-        color: ['#06479e'],
-        xAxis: [
-          {
-            type: 'category',
-            data: [...new Set(dataList1.map((item) => item.ValueType))],
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: '#ffffff',
-              },
-            },
-            axisLabel: {
-              show: true,
-              textStyle: {
-                color: '#ffffff',
-              },
-            },
-          },
-        ],
+        ...defaultOptions,
         series: [
           {
-            name: '行业需求汇总',
-            type: 'bar',
-            data: dataList1.map((item) => item.Value),
-            itemStyle: {
-              normal: {
-                barBorderRadius: [10, 10, 0, 0],
+            name: '需求数',
+            type: 'pie',
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
               },
             },
-            barWidth: 12,
+            data: dataList1.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
@@ -152,7 +152,7 @@ const Xqhz = () => {
         ],
         series: [
           {
-            name: '需求类型汇总',
+            name: '需求数',
             type: 'bar',
             data: dataList2.map((item) => item.Value),
             itemStyle: {
@@ -170,39 +170,28 @@ const Xqhz = () => {
   useEffect(() => {
     if (dataList3.length > 0 && chartInstance3) {
       chartInstance3.setOption({
-        ...defaultOptions2,
-        color: ['#06479e'],
-        xAxis: [
-          {
-            type: 'category',
-            data: [...new Set(dataList3.map((item) => item.ValueType))],
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: '#ffffff',
-              },
-              interval: 0,
-              rotate: -30,
-            },
-            axisLabel: {
-              show: true,
-              textStyle: {
-                color: '#ffffff',
-              },
-            },
-          },
-        ],
+        ...defaultOptions,
         series: [
           {
-            name: '需求状态汇总',
-            type: 'bar',
-            data: dataList3.map((item) => item.Value),
-            itemStyle: {
-              normal: {
-                barBorderRadius: [10, 10, 0, 0],
+            name: '需求数',
+            type: 'pie',
+            radius: ['40%', '80%'],
+            label: {
+              show: false,
+              position: 'center',
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '12',
+                fontWeight: 'bold',
+                color: '#fff',
               },
             },
-            barWidth: 12,
+            data: dataList3.map((item) => ({
+              name: item.ValueType,
+              value: item.Value,
+            })),
           },
         ],
       });
@@ -214,8 +203,8 @@ const Xqhz = () => {
       <h2>需求汇总</h2>
       <div className="g-filter">
         <a
-          onClick={() => setTab(1)}
-          className={`item ${tab === 1 ? 'on' : undefined}`}
+          onClick={() => setTab(0)}
+          className={`item ${tab === 0 ? 'on' : undefined}`}
         >
           行业需求汇总
         </a>
@@ -223,24 +212,48 @@ const Xqhz = () => {
           onClick={() => setTab(2)}
           className={`item ${tab === 2 ? 'on' : undefined}`}
         >
-          需求类型汇总
+          需求状态汇总
         </a>
         <a
-          onClick={() => setTab(3)}
-          className={`item ${tab === 3 ? 'on' : undefined}`}
+          onClick={() => setTab(1)}
+          className={`item ${tab === 1 ? 'on' : undefined}`}
         >
-          需求状态汇总
+          需求类型汇总
         </a>
       </div>
       <div className="g-filterBD">
         <div
           className="tab-con"
-          style={{ display: tab === 1 ? 'block' : 'none' }}
+          style={{ display: tab === 0 ? 'block' : 'none' }}
         >
-          <div
-            ref={chartRef1}
-            style={{ width: '4rem', height: '1.5rem' }}
-          ></div>
+          <div className="uc-flex">
+            <div
+              className="g-legend flex uc-mb20"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                marginLeft: '40px',
+              }}
+            >
+              {dataList1.map((item, index) => (
+                <div
+                  className="item"
+                  key={item.ValueType}
+                  style={{ width: '50%' }}
+                >
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
+            </div>
+            <div
+              ref={chartRef1}
+              style={{ width: '1.2rem', height: '1.5rem', margin: '0 .4rem' }}
+            />
+          </div>
         </div>
         <div
           className="tab-con"
@@ -253,12 +266,36 @@ const Xqhz = () => {
         </div>
         <div
           className="tab-con"
-          style={{ display: tab === 3 ? 'block' : 'none' }}
+          style={{ display: tab === 1 ? 'block' : 'none' }}
         >
-          <div
-            ref={chartRef3}
-            style={{ width: '4rem', height: '1.5rem' }}
-          ></div>
+          <div className="uc-flex">
+            <div
+              className="g-legend flex uc-mb20"
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                marginLeft: '40px',
+              }}
+            >
+              {dataList3.map((item, index) => (
+                <div
+                  className="item"
+                  key={item.ValueType}
+                  style={{ width: '50%' }}
+                >
+                  <i
+                    className="dot"
+                    style={{ backgroundColor: colorList[index] }}
+                  ></i>
+                  {item.ValueType}
+                </div>
+              ))}
+            </div>
+            <div
+              ref={chartRef3}
+              style={{ width: '1.2rem', height: '1.5rem', margin: '0 .4rem' }}
+            />
+          </div>
         </div>
       </div>
     </section>

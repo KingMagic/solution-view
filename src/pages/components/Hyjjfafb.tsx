@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { queryHyjjfafb, queryHyjjfafbx } from '../service';
-import { colorList, defaultOptions } from '../utils';
+import { colorList, defaultOptions, defaultOptions2 } from '../utils';
 
 type DataItem = {
   ValueType: string;
@@ -12,42 +12,6 @@ type DataItem2 = {
   FangAnName: string;
   Finish: number;
   Undone: number;
-};
-
-const defaultOptions2 = {
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '5%',
-    top: '5%',
-    containLabel: true,
-  },
-  tooltip: {
-    trigger: 'axis',
-  },
-  yAxis: [
-    {
-      // show:false,
-      axisLabel: {
-        show: true,
-        textStyle: {
-          color: '#ffffff',
-        },
-      },
-      axisLine: {
-        show: true,
-        lineStyle: {
-          color: '#ffffff',
-        },
-      },
-      splitLine: {
-        show: false,
-        lineStyle: {
-          color: '#d5d5d5',
-        },
-      },
-    },
-  ],
 };
 
 const Hyjjfafb = () => {
@@ -71,7 +35,7 @@ const Hyjjfafb = () => {
   useEffect(() => {
     if (chartInstance1 && chartInstance2) {
       query();
-      const interval = setInterval(query, 3 * 1000);
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1, chartInstance2]);
@@ -87,7 +51,7 @@ const Hyjjfafb = () => {
         ...defaultOptions,
         series: [
           {
-            name: '行业解决方案',
+            name: '方案数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {

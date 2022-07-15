@@ -24,7 +24,7 @@ type TableDataItem = {
 };
 
 const Csrwzl = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
@@ -50,9 +50,14 @@ const Csrwzl = () => {
   }, []);
 
   useEffect(() => {
+    const interval = setInterval(() => setTab((tab + 1) % 3), 45 * 1000);
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  useEffect(() => {
     if (chartInstance1 && chartInstance2 && chartInstance3) {
       query();
-      const interval = setInterval(query, 3 * 1000);
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1, chartInstance2, chartInstance3]);
@@ -69,7 +74,7 @@ const Csrwzl = () => {
         ...defaultOptions,
         series: [
           {
-            name: '基线',
+            name: '任务数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -100,7 +105,7 @@ const Csrwzl = () => {
         ...defaultOptions,
         series: [
           {
-            name: '生态集成验证',
+            name: '任务数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -131,7 +136,7 @@ const Csrwzl = () => {
         ...defaultOptions,
         series: [
           {
-            name: '场景化需求',
+            name: '任务数',
             type: 'pie',
             radius: ['40%', '80%'],
             label: {
@@ -193,20 +198,20 @@ const Csrwzl = () => {
         <h2>测试任务总览</h2>
         <div className="g-filter">
           <a
-            onClick={() => setTab(1)}
-            className={`item ${tab === 1 ? 'on' : undefined}`}
+            onClick={() => setTab(0)}
+            className={`item ${tab === 0 ? 'on' : undefined}`}
           >
             基线
           </a>
           <a
-            onClick={() => setTab(2)}
-            className={`item ${tab === 2 ? 'on' : undefined}`}
+            onClick={() => setTab(1)}
+            className={`item ${tab === 1 ? 'on' : undefined}`}
           >
             生态集成验证
           </a>
           <a
-            onClick={() => setTab(3)}
-            className={`item ${tab === 3 ? 'on' : undefined}`}
+            onClick={() => setTab(2)}
+            className={`item ${tab === 2 ? 'on' : undefined}`}
           >
             场景化需求
           </a>
@@ -215,7 +220,7 @@ const Csrwzl = () => {
         <div className="g-filterBD">
           <div
             className="tab-con"
-            style={{ display: tab === 1 ? 'block' : 'none' }}
+            style={{ display: tab === 0 ? 'block' : 'none' }}
           >
             <div className="uc-flex">
               <div className="g-legend flex uc-ml20">
@@ -243,7 +248,7 @@ const Csrwzl = () => {
           </div>
           <div
             className="tab-con"
-            style={{ display: tab === 2 ? 'block' : 'none' }}
+            style={{ display: tab === 1 ? 'block' : 'none' }}
           >
             <div className="uc-flex">
               <div className="g-legend flex uc-ml20">
@@ -265,7 +270,7 @@ const Csrwzl = () => {
           </div>
           <div
             className="tab-con"
-            style={{ display: tab === 3 ? 'block' : 'none' }}
+            style={{ display: tab === 2 ? 'block' : 'none' }}
           >
             <div className="uc-flex">
               <div className="g-legend flex uc-ml20">

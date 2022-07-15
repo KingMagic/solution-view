@@ -17,6 +17,10 @@ const options = {
     containLabel: true,
   },
   tooltip: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    textStyle: {
+      color: '#ffffff',
+    },
     trigger: 'axis',
   },
   yAxis: [
@@ -55,7 +59,7 @@ const Ydxqfb = () => {
   useEffect(() => {
     if (chartInstance1) {
       query();
-      const interval = setInterval(query, 3 * 1000);
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1]);
@@ -92,7 +96,7 @@ const Ydxqfb = () => {
         ],
         series: [
           {
-            name: '月度需求分布',
+            name: '需求数',
             type: 'line',
             stack: '总量',
             areaStyle: {
