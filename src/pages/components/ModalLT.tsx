@@ -11,14 +11,18 @@ type DataItem = {
   TableType: string;
 };
 
+let change = 0;
+
 const ModalLT = (props: any) => {
   const { onClose } = props;
   const chartRef4 = useRef<HTMLDivElement>(null);
   const [dataList, setDataList] = useState<DataItem[]>([]);
+  const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
 
   useEffect(() => {
     if (chartRef4.current) {
       const modalInstance = echarts.init(chartRef4.current);
+      setChartInstance1(modalInstance);
       queryHyxszb().then((res) => {
         setDataList(res);
         modalInstance.setOption({
@@ -64,6 +68,23 @@ const ModalLT = (props: any) => {
       });
     }
   }, [chartRef4.current]);
+
+  useEffect(() => {
+    if (dataList.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change % dataList.length,
+        });
+        change += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change % dataList.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList, chartInstance1]);
 
   const dom = (
     <div className="uc-alert uc-alert-proportion uc-show">
