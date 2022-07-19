@@ -27,26 +27,30 @@ const Zjztzl = () => {
       <h2>真机状态总览</h2>
       <div className="table" style={{ height: '1.6rem', overflow: 'auto' }}>
         <table>
-          <tr>
-            <th>地点</th>
-            <th>NO</th>
-            <th>上线状态</th>
-            <th>对接伙伴</th>
-          </tr>
-          {dataList?.map((item) => (
-            <tr key={item.No}>
-              <td>{item.DiDian}</td>
-              <td>{item.No}</td>
-              <td>
-                <img
-                  src={item.Status ? green : red}
-                  className="uc-icon16"
-                  alt=""
-                />
-              </td>
-              <td>{item.YiWanCheng}</td>
+          <thead>
+            <tr>
+              <th>地点</th>
+              <th>NO</th>
+              <th>上线状态</th>
+              <th>对接伙伴</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {dataList?.map((item) => (
+              <tr key={item.No}>
+                <td>{item.DiDian}</td>
+                <td>{item.No}</td>
+                <td>
+                  <img
+                    src={item.Status ? green : red}
+                    className="uc-icon16"
+                    alt=""
+                  />
+                </td>
+                <td>{item.YiWanCheng}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </section>

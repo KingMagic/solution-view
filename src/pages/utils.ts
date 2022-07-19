@@ -43,7 +43,7 @@ const defaultOptions2 = {
     left: '3%',
     right: '4%',
     bottom: '5%',
-    top: '5%',
+    top: '10%',
     containLabel: true,
   },
   tooltip: {
@@ -51,7 +51,6 @@ const defaultOptions2 = {
     textStyle: {
       color: '#ffffff',
     },
-    trigger: 'axis',
   },
   yAxis: [
     {

@@ -86,6 +86,10 @@ const queryXqldzl = () => {
   return request(preUrl + '/XuQiuLuoDiZongLan');
 };
 
+const queryXqldxq = () => {
+  return request(preUrl + '/XuQiuLuoDi');
+};
+
 export {
   queryHangYeXiaoShou,
   queryFangAnXiaoShou,
@@ -103,4 +107,5 @@ export {
   queryJjfaqj,
   queryHyxszb,
   queryXqldzl,
+  queryXqldxq,
 };

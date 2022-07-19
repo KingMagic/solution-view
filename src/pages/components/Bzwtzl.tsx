@@ -12,6 +12,9 @@ type DataItem = {
 
 const colorList = ['#682cea', '#2a7bf3', '#00e284', '#fd8c04', '#a5a5a5'];
 
+let change1 = 0;
+let change2 = 0;
+
 const Bzwtzl = () => {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
@@ -84,6 +87,23 @@ const Bzwtzl = () => {
   }, [dataList1, chartInstance1]);
 
   useEffect(() => {
+    if (dataList1.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % dataList1.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % dataList1.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList1, chartInstance1]);
+
+  useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
       chartInstance2.setOption({
         ...defaultOptions,
@@ -111,6 +131,23 @@ const Bzwtzl = () => {
           },
         ],
       });
+    }
+  }, [dataList2, chartInstance2]);
+
+  useEffect(() => {
+    if (dataList2.length > 0 && chartInstance2) {
+      const interval = setInterval(() => {
+        chartInstance2.dispatchAction({
+          type: 'downplay',
+          dataIndex: change2 % dataList2.length,
+        });
+        change2 += 1;
+        chartInstance2.dispatchAction({
+          type: 'highlight',
+          dataIndex: change2 % dataList2.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [dataList2, chartInstance2]);
 

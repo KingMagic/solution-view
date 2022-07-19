@@ -36,26 +36,30 @@ const ModalLB = (props: any) => {
         </div>
         <div className="table" style={{ marginTop: '.2rem' }}>
           <table>
-            <tr>
-              <th>行业</th>
-              <th>方案名称</th>
-              <th>方案阶段</th>
-              <th>测试进度</th>
-              <th>DI值</th>
-              <th>成熟度</th>
-              <th>发布日期</th>
-            </tr>
-            {dataList.map((item) => (
+            <thead>
               <tr>
-                <td>{item.HangYe}</td>
-                <td>{item.FangAnName}</td>
-                <td>{item.JieDuan}</td>
-                <td>{item.JinDu}</td>
-                <td>{item.DI}</td>
-                <td>{item.ChengSuDu}</td>
-                <td>{item.Date}</td>
+                <th>行业</th>
+                <th>方案名称</th>
+                <th>方案阶段</th>
+                <th>测试进度</th>
+                <th>DI值</th>
+                <th>成熟度</th>
+                <th>发布日期</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {dataList.map((item) => (
+                <tr>
+                  <td>{item.HangYe}</td>
+                  <td>{item.FangAnName}</td>
+                  <td>{item.JieDuan}</td>
+                  <td>{item.JinDu}</td>
+                  <td>{item.DI}</td>
+                  <td>{item.ChengSuDu}</td>
+                  <td>{item.Date}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>

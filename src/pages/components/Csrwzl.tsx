@@ -23,6 +23,10 @@ type TableDataItem = {
   Date: string;
 };
 
+let change1 = 0;
+let change2 = 0;
+let change3 = 0;
+
 const Csrwzl = () => {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
@@ -100,6 +104,23 @@ const Csrwzl = () => {
   }, [dataList1, chartInstance1]);
 
   useEffect(() => {
+    if (dataList1.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % dataList1.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % dataList1.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList1, chartInstance1]);
+
+  useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
       chartInstance2.setOption({
         ...defaultOptions,
@@ -127,6 +148,23 @@ const Csrwzl = () => {
           },
         ],
       });
+    }
+  }, [dataList2, chartInstance2]);
+
+  useEffect(() => {
+    if (dataList2.length > 0 && chartInstance2) {
+      const interval = setInterval(() => {
+        chartInstance2.dispatchAction({
+          type: 'downplay',
+          dataIndex: change2 % dataList2.length,
+        });
+        change2 += 1;
+        chartInstance2.dispatchAction({
+          type: 'highlight',
+          dataIndex: change2 % dataList2.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [dataList2, chartInstance2]);
 
@@ -161,36 +199,22 @@ const Csrwzl = () => {
     }
   }, [dataList3, chartInstance3]);
 
-  const columns = [
-    {
-      title: '行业',
-      dataIndex: 'HangYe',
-    },
-    {
-      title: '方案名称',
-      dataIndex: 'FangAnName',
-    },
-    {
-      title: '方案阶段',
-      dataIndex: 'JieDuan',
-    },
-    {
-      title: '测试进度',
-      dataIndex: 'JinDu',
-    },
-    {
-      title: 'DI值',
-      dataIndex: 'DI',
-    },
-    {
-      title: '成熟度',
-      dataIndex: 'ChengSuDu',
-    },
-    {
-      title: '发布日期',
-      dataIndex: 'Date',
-    },
-  ];
+  useEffect(() => {
+    if (dataList3.length > 0 && chartInstance3) {
+      const interval = setInterval(() => {
+        chartInstance3.dispatchAction({
+          type: 'downplay',
+          dataIndex: change3 % dataList3.length,
+        });
+        change3 += 1;
+        chartInstance3.dispatchAction({
+          type: 'highlight',
+          dataIndex: change3 % dataList3.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList3, chartInstance3]);
 
   return (
     <>

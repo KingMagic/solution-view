@@ -14,6 +14,8 @@ type DataItem2 = {
   Undone: number;
 };
 
+let change1 = 0;
+
 const Hyjjfafb = () => {
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -77,6 +79,23 @@ const Hyjjfafb = () => {
   }, [dataList1, chartInstance1]);
 
   useEffect(() => {
+    if (dataList1.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % dataList1.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % dataList1.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList1, chartInstance1]);
+
+  useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
       chartInstance2.setOption({
         ...defaultOptions2,
@@ -106,10 +125,18 @@ const Hyjjfafb = () => {
             itemStyle: {
               normal: {
                 color: '#2a7bf3',
-                barBorderRadius: [10, 10, 0, 0],
               },
             },
-            barWidth: 12,
+            barWidth: 20,
+            emphasis: {
+              itemStyle: {
+                color: '#fd8c04',
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+            },
           },
           {
             name: '已发布',
@@ -118,10 +145,18 @@ const Hyjjfafb = () => {
             itemStyle: {
               normal: {
                 color: '#00e284',
-                barBorderRadius: [10, 10, 0, 0],
               },
             },
-            barWidth: 12,
+            barWidth: 20,
+            emphasis: {
+              itemStyle: {
+                color: '#fd8c04',
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+            },
           },
         ],
       });

@@ -10,6 +10,12 @@ type DataItem = {
   TableType: string;
 };
 
+let change1 = 0;
+let change2 = 0;
+let change3 = 0;
+let change4 = 0;
+let change5 = 0;
+
 const Hyxsfb = () => {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
@@ -112,6 +118,23 @@ const Hyxsfb = () => {
   }, [dataList1, chartInstance1]);
 
   useEffect(() => {
+    if (dataList1.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % dataList1.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % dataList1.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList1, chartInstance1]);
+
+  useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
       chartInstance2.setOption({
         ...defaultOptions,
@@ -139,6 +162,23 @@ const Hyxsfb = () => {
           },
         ],
       });
+    }
+  }, [dataList2, chartInstance2]);
+
+  useEffect(() => {
+    if (dataList2.length > 0 && chartInstance2) {
+      const interval = setInterval(() => {
+        chartInstance2.dispatchAction({
+          type: 'downplay',
+          dataIndex: change2 % dataList2.length,
+        });
+        change2 += 1;
+        chartInstance2.dispatchAction({
+          type: 'highlight',
+          dataIndex: change2 % dataList2.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [dataList2, chartInstance2]);
 
@@ -174,6 +214,23 @@ const Hyxsfb = () => {
   }, [dataList3, chartInstance3]);
 
   useEffect(() => {
+    if (dataList3.length > 0 && chartInstance3) {
+      const interval = setInterval(() => {
+        chartInstance3.dispatchAction({
+          type: 'downplay',
+          dataIndex: change3 % dataList3.length,
+        });
+        change3 += 1;
+        chartInstance3.dispatchAction({
+          type: 'highlight',
+          dataIndex: change3 % dataList3.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList3, chartInstance3]);
+
+  useEffect(() => {
     if (dataList4.length > 0 && chartInstance4) {
       chartInstance4.setOption({
         ...defaultOptions,
@@ -205,6 +262,23 @@ const Hyxsfb = () => {
   }, [dataList4, chartInstance4]);
 
   useEffect(() => {
+    if (dataList4.length > 0 && chartInstance4) {
+      const interval = setInterval(() => {
+        chartInstance4.dispatchAction({
+          type: 'downplay',
+          dataIndex: change4 % dataList4.length,
+        });
+        change4 += 1;
+        chartInstance4.dispatchAction({
+          type: 'highlight',
+          dataIndex: change4 % dataList4.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList4, chartInstance4]);
+
+  useEffect(() => {
     if (dataList5.length > 0 && chartInstance5) {
       chartInstance5.setOption({
         ...defaultOptions,
@@ -232,6 +306,23 @@ const Hyxsfb = () => {
           },
         ],
       });
+    }
+  }, [dataList5, chartInstance5]);
+
+  useEffect(() => {
+    if (dataList5.length > 0 && chartInstance5) {
+      const interval = setInterval(() => {
+        chartInstance5.dispatchAction({
+          type: 'downplay',
+          dataIndex: change5 % dataList5.length,
+        });
+        change5 += 1;
+        chartInstance5.dispatchAction({
+          type: 'highlight',
+          dataIndex: change5 % dataList5.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [dataList5, chartInstance5]);
 

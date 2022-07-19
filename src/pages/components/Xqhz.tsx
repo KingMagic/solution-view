@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { queryHyxq } from '../service';
-import { colorList, defaultOptions } from '../utils';
+import { colorList, defaultOptions, defaultOptions2 } from '../utils';
 
 type DataItem = {
   id: number;
@@ -10,45 +10,8 @@ type DataItem = {
   TableType: string;
 };
 
-const defaultOptions2 = {
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '5%',
-    top: '5%',
-    containLabel: true,
-  },
-  tooltip: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    textStyle: {
-      color: '#ffffff',
-    },
-    trigger: 'axis',
-  },
-  yAxis: [
-    {
-      // show:false,
-      axisLabel: {
-        show: true,
-        textStyle: {
-          color: '#ffffff',
-        },
-      },
-      axisLine: {
-        show: true,
-        lineStyle: {
-          color: '#ffffff',
-        },
-      },
-      splitLine: {
-        show: false,
-        lineStyle: {
-          color: '#d5d5d5',
-        },
-      },
-    },
-  ],
-};
+let change1 = 0;
+let change3 = 0;
 
 const Xqhz = () => {
   const [tab, setTab] = useState(0);
@@ -126,6 +89,23 @@ const Xqhz = () => {
   }, [dataList1, chartInstance1]);
 
   useEffect(() => {
+    if (dataList1.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % dataList1.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % dataList1.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [dataList1, chartInstance1]);
+
+  useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
       chartInstance2.setOption({
         ...defaultOptions2,
@@ -160,7 +140,16 @@ const Xqhz = () => {
                 barBorderRadius: [10, 10, 0, 0],
               },
             },
+            label: {
+              show: true,
+              position: 'top',
+            },
             barWidth: 12,
+            emphasis: {
+              itemStyle: {
+                color: '#16e79e',
+              },
+            },
           },
         ],
       });
@@ -195,6 +184,23 @@ const Xqhz = () => {
           },
         ],
       });
+    }
+  }, [dataList3, chartInstance3]);
+
+  useEffect(() => {
+    if (dataList3.length > 0 && chartInstance3) {
+      const interval = setInterval(() => {
+        chartInstance3.dispatchAction({
+          type: 'downplay',
+          dataIndex: change3 % dataList3.length,
+        });
+        change3 += 1;
+        chartInstance3.dispatchAction({
+          type: 'highlight',
+          dataIndex: change3 % dataList3.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [dataList3, chartInstance3]);
 

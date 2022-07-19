@@ -10,6 +10,8 @@ type DataItem = {
   TableType: string;
 };
 
+let change1 = 0;
+
 const Sthzywzl = () => {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
@@ -80,6 +82,23 @@ const Sthzywzl = () => {
           },
         ],
       });
+    }
+  }, [dataList1, chartInstance1]);
+
+  useEffect(() => {
+    if (dataList1.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % dataList1.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % dataList1.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);
 

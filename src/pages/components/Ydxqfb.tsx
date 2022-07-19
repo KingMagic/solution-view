@@ -21,7 +21,6 @@ const options = {
     textStyle: {
       color: '#ffffff',
     },
-    trigger: 'axis',
   },
   yAxis: [
     {
@@ -112,8 +111,12 @@ const Ydxqfb = () => {
               ]),
             },
             data: dataList1.map((item) => item.Value),
+            label: {
+              show: true,
+            },
             emphasis: {
               itemStyle: {
+                color: '#6663fa',
                 shadowBlur: 10,
                 shadowOffsetX: 0,
                 shadowColor: 'rgba(0, 0, 0, 0.1)',

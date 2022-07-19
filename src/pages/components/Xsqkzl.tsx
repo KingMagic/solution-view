@@ -32,7 +32,6 @@ const defaultOptions2 = {
     textStyle: {
       color: '#ffffff',
     },
-    trigger: 'axis',
   },
   yAxis: [
     {
@@ -58,6 +57,9 @@ const defaultOptions2 = {
     },
   ],
 };
+
+let change1 = 0;
+let change2 = 0;
 
 const Xsqkzl = () => {
   const [tab, setTab] = useState(0);
@@ -108,7 +110,6 @@ const Xsqkzl = () => {
     if (hxxsDataList.length > 0 && chartInstance1) {
       chartInstance1.setOption({
         ...defaultOptions,
-        selectedMode: 'multiple',
         series: [
           {
             name: '项目数',
@@ -133,10 +134,23 @@ const Xsqkzl = () => {
           },
         ],
       });
-      chartInstance1.dispatchAction({
-        type: 'highlight',
-        dataIndex: 2,
-      });
+    }
+  }, [hxxsDataList, chartInstance1]);
+
+  useEffect(() => {
+    if (hxxsDataList.length > 0 && chartInstance1) {
+      const interval = setInterval(() => {
+        chartInstance1.dispatchAction({
+          type: 'downplay',
+          dataIndex: change1 % hxxsDataList.length,
+        });
+        change1 += 1;
+        chartInstance1.dispatchAction({
+          type: 'highlight',
+          dataIndex: change1 % hxxsDataList.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [hxxsDataList, chartInstance1]);
 
@@ -168,6 +182,23 @@ const Xsqkzl = () => {
           },
         ],
       });
+    }
+  }, [faxsDataList, chartInstance2]);
+
+  useEffect(() => {
+    if (faxsDataList.length > 0 && chartInstance2) {
+      const interval = setInterval(() => {
+        chartInstance2.dispatchAction({
+          type: 'downplay',
+          dataIndex: change2 % faxsDataList.length,
+        });
+        change2 += 1;
+        chartInstance2.dispatchAction({
+          type: 'highlight',
+          dataIndex: change2 % faxsDataList.length,
+        });
+      }, 1000);
+      return () => clearInterval(interval);
     }
   }, [faxsDataList, chartInstance2]);
 
@@ -205,6 +236,15 @@ const Xsqkzl = () => {
                 color: colorList2[index],
                 barBorderRadius: [10, 10, 0, 0],
               },
+            },
+            emphasis: {
+              itemStyle: {
+                color: '#16e79e',
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
             },
             barWidth: 12,
           }),
