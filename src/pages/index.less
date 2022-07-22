@@ -235,6 +235,29 @@ body::-webkit-scrollbar-thumb:hover {
   transition: 0.3s ease-in-out;
 }
 
+.line-chart::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background-color: transparent;
+  border-radius: 2px;
+}
+
+.line-chart::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+.line-chart::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0, 231, 247, 0.6);
+}
+
+.line-chart::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 231, 247, 0.6);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -2044,7 +2067,7 @@ button:after {
   padding: 0 0.1rem;
   text-align: center;
   position: relative;
-  top: 0.1rem;
+  top: -0.1rem;
 }
 
 .uc-alert-total .list .item .icon {

@@ -98,6 +98,7 @@ const Hyxsfb = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -129,7 +130,7 @@ const Hyxsfb = () => {
           type: 'highlight',
           dataIndex: change1 % dataList1.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);
@@ -146,6 +147,7 @@ const Hyxsfb = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -177,7 +179,7 @@ const Hyxsfb = () => {
           type: 'highlight',
           dataIndex: change2 % dataList2.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList2, chartInstance2]);
@@ -194,6 +196,7 @@ const Hyxsfb = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -225,7 +228,7 @@ const Hyxsfb = () => {
           type: 'highlight',
           dataIndex: change3 % dataList3.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList3, chartInstance3]);
@@ -242,6 +245,7 @@ const Hyxsfb = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -273,7 +277,7 @@ const Hyxsfb = () => {
           type: 'highlight',
           dataIndex: change4 % dataList4.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList4, chartInstance4]);
@@ -290,6 +294,7 @@ const Hyxsfb = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -321,7 +326,7 @@ const Hyxsfb = () => {
           type: 'highlight',
           dataIndex: change5 % dataList5.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList5, chartInstance5]);

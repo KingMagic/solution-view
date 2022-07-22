@@ -16,7 +16,7 @@ const Zjztzl = () => {
 
   useEffect(() => {
     query();
-    const interval = setInterval(query, 30 * 1000);
+    const interval = setInterval(query, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 

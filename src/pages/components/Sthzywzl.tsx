@@ -66,6 +66,7 @@ const Sthzywzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -97,7 +98,7 @@ const Sthzywzl = () => {
           type: 'highlight',
           dataIndex: change1 % dataList1.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);
@@ -235,12 +236,20 @@ const Sthzywzl = () => {
           <div className="uc-flex">
             <div
               className="g-legend flex"
-              style={{ display: 'flex', flexWrap: 'wrap', marginTop: '0.1rem' }}
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                marginTop: '0.1rem',
+                marginLeft: '40px',
+              }}
             >
               {dataList1.map((item, index) => (
                 <div
                   className="item"
-                  style={{ width: '50%', marginBottom: '0.1rem' }}
+                  style={{
+                    width: index % 2 === 0 ? '40%' : '60%',
+                    marginBottom: '0.1rem',
+                  }}
                   key={item.ValueType}
                 >
                   <i

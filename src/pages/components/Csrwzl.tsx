@@ -84,6 +84,7 @@ const Csrwzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -115,7 +116,7 @@ const Csrwzl = () => {
           type: 'highlight',
           dataIndex: change1 % dataList1.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);
@@ -132,6 +133,7 @@ const Csrwzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -163,7 +165,7 @@ const Csrwzl = () => {
           type: 'highlight',
           dataIndex: change2 % dataList2.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList2, chartInstance2]);
@@ -180,6 +182,7 @@ const Csrwzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -211,7 +214,7 @@ const Csrwzl = () => {
           type: 'highlight',
           dataIndex: change3 % dataList3.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList3, chartInstance3]);

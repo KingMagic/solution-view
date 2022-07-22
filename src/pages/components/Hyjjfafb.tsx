@@ -59,6 +59,7 @@ const Hyjjfafb = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -90,7 +91,7 @@ const Hyjjfafb = () => {
           type: 'highlight',
           dataIndex: change1 % dataList1.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);

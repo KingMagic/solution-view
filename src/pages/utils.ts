@@ -30,7 +30,8 @@ const defaultOptions = {
   },
   color: colorList,
   tooltip: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderColor: 'transparent',
     textStyle: {
       color: '#ffffff',
     },
@@ -43,11 +44,12 @@ const defaultOptions2 = {
     left: '3%',
     right: '4%',
     bottom: '5%',
-    top: '10%',
+    top: '12%',
     containLabel: true,
   },
   tooltip: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderColor: 'transparent',
     textStyle: {
       color: '#ffffff',
     },
@@ -60,6 +62,7 @@ const defaultOptions2 = {
         textStyle: {
           color: '#ffffff',
         },
+        interval: 1,
       },
       axisLine: {
         show: true,
@@ -77,4 +80,15 @@ const defaultOptions2 = {
   ],
 };
 
-export { colorList, defaultOptions, defaultOptions2 };
+const refreshTime = 60 * 1000;
+const tabChangeTime = 45 * 1000;
+const itemChangeTime = 30 * 1000;
+
+export {
+  colorList,
+  defaultOptions,
+  defaultOptions2,
+  refreshTime,
+  tabChangeTime,
+  itemChangeTime,
+};

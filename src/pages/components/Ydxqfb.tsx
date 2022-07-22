@@ -16,6 +16,11 @@ const options = {
     top: '4%',
     containLabel: true,
   },
+  xAxis: {
+    axisLabel: {
+      hideOverlap: false,
+    },
+  },
   tooltip: {
     backgroundColor: 'rgba(255,255,255,0.3)',
     textStyle: {
@@ -58,7 +63,7 @@ const Ydxqfb = () => {
   useEffect(() => {
     if (chartInstance1) {
       query();
-      const interval = setInterval(query, 30 * 1000);
+      const interval = setInterval(query, 60 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1]);
@@ -141,7 +146,9 @@ const Ydxqfb = () => {
   return (
     <section className="box box10">
       <h2>月度需求分布</h2>
-      <div ref={chartRef1} style={{ width: '100%', height: '1.5rem' }}></div>
+      <div className="line-chart" style={{ overflow: 'auto' }}>
+        <div ref={chartRef1} style={{ width: '6rem', height: '1.5rem' }}></div>
+      </div>
     </section>
   );
 };

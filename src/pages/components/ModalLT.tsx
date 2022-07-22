@@ -81,7 +81,7 @@ const ModalLT = (props: any) => {
           type: 'highlight',
           dataIndex: change % dataList.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList, chartInstance1]);

@@ -95,7 +95,7 @@ const Xsqkzl = () => {
   useEffect(() => {
     if (chartInstance1 && chartInstance2 && chartInstance3) {
       query();
-      const interval = setInterval(query, 30 * 1000);
+      const interval = setInterval(query, 60 * 1000);
       return () => clearInterval(interval);
     }
   }, [chartInstance1, chartInstance2, chartInstance3]);
@@ -118,6 +118,7 @@ const Xsqkzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -149,7 +150,7 @@ const Xsqkzl = () => {
           type: 'highlight',
           dataIndex: change1 % hxxsDataList.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [hxxsDataList, chartInstance1]);
@@ -166,6 +167,7 @@ const Xsqkzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -197,7 +199,7 @@ const Xsqkzl = () => {
           type: 'highlight',
           dataIndex: change2 % faxsDataList.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [faxsDataList, chartInstance2]);

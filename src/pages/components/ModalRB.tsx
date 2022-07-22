@@ -45,9 +45,11 @@ const ModalRB = (props: any) => {
           <ul className="list">
             {unikeyList.map((key) => {
               const [system, version] = key.split('$$');
-              const filterData = dataList.filter(
-                (data) => data.System === system && data.Version === version,
-              );
+              const filterData = dataList
+                .filter(
+                  (data) => data.System === system && data.Version === version,
+                )
+                .filter((data) => data.demands && data.demands > 0);
               // const dateList = filterData.map(data => moment(data.MilestoneDate).valueOf())
               return (
                 <li key={key}>
@@ -61,6 +63,7 @@ const ModalRB = (props: any) => {
                         <p>
                           <time>{data.MilestoneDate}</time>
                         </p>
+                        <h4 style={{ color: '#ffffff' }}>{data.Action}</h4>
                         <img src={arrow} className="icon" alt="" />
                         <div className="btm">
                           接纳需求：

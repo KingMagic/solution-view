@@ -69,6 +69,7 @@ const Xqhz = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -100,7 +101,7 @@ const Xqhz = () => {
           type: 'highlight',
           dataIndex: change1 % dataList1.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);
@@ -168,6 +169,7 @@ const Xqhz = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -199,7 +201,7 @@ const Xqhz = () => {
           type: 'highlight',
           dataIndex: change3 % dataList3.length,
         });
-      }, 1000);
+      }, 30 * 1000);
       return () => clearInterval(interval);
     }
   }, [dataList3, chartInstance3]);

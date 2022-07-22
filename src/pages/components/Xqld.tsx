@@ -25,7 +25,14 @@ const Xqld = () => {
         <ul className="list11">
           {dataList.map((item) => (
             <li key={item.System + item.Version}>
-              <div className="left">
+              <div
+                className="left"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                }}
+              >
                 <p>
                   <b>{item.System}</b>
                 </p>

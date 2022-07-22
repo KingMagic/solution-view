@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { queryBzwtzl } from '../service';
-import { defaultOptions } from '../utils';
+import {
+  defaultOptions,
+  refreshTime,
+  tabChangeTime,
+  itemChangeTime,
+} from '../utils';
 
 type DataItem = {
   id: number;
@@ -35,7 +40,7 @@ const Bzwtzl = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => setTab((tab + 1) % 2), 45 * 1000);
+    const interval = setInterval(() => setTab((tab + 1) % 2), tabChangeTime);
     return () => clearInterval(interval);
   }, [tab]);
 
@@ -46,7 +51,7 @@ const Bzwtzl = () => {
     if (chartInstance2) {
       queryBzwtzl('负向改进').then((res) => setDataList2(res));
     }
-    const interval = setInterval(query, 30 * 1000);
+    const interval = setInterval(query, refreshTime);
     return () => clearInterval(interval);
   }, [chartInstance1, chartInstance2]);
 
@@ -67,6 +72,7 @@ const Bzwtzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -88,6 +94,10 @@ const Bzwtzl = () => {
 
   useEffect(() => {
     if (dataList1.length > 0 && chartInstance1) {
+      chartInstance1.dispatchAction({
+        type: 'highlight',
+        dataIndex: change1 % dataList1.length,
+      });
       const interval = setInterval(() => {
         chartInstance1.dispatchAction({
           type: 'downplay',
@@ -98,7 +108,7 @@ const Bzwtzl = () => {
           type: 'highlight',
           dataIndex: change1 % dataList1.length,
         });
-      }, 1000);
+      }, itemChangeTime);
       return () => clearInterval(interval);
     }
   }, [dataList1, chartInstance1]);
@@ -115,6 +125,7 @@ const Bzwtzl = () => {
             label: {
               show: false,
               position: 'center',
+              formatter: '{c}\n{b}',
             },
             emphasis: {
               label: {
@@ -136,6 +147,10 @@ const Bzwtzl = () => {
 
   useEffect(() => {
     if (dataList2.length > 0 && chartInstance2) {
+      chartInstance2.dispatchAction({
+        type: 'highlight',
+        dataIndex: change2 % dataList2.length,
+      });
       const interval = setInterval(() => {
         chartInstance2.dispatchAction({
           type: 'downplay',
@@ -146,7 +161,7 @@ const Bzwtzl = () => {
           type: 'highlight',
           dataIndex: change2 % dataList2.length,
         });
-      }, 1000);
+      }, itemChangeTime);
       return () => clearInterval(interval);
     }
   }, [dataList2, chartInstance2]);
