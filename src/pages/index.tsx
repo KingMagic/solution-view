@@ -32,10 +32,10 @@ export default function IndexPage() {
         </div>
         <div className="g-clock date">
           <span className="day">
-            <b></b>
+            <b />
           </span>
           <time>{current.format('YYYY-MM-DD HH:mm:ss dddd')}</time>
-          <span className="week"></span>
+          <span className="week" />
         </div>
       </header>
 
