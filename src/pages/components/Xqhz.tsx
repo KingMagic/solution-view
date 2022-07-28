@@ -13,7 +13,7 @@ type DataItem = {
 let change1 = 0;
 let change3 = 0;
 
-const Xqhz = () => {
+function Xqhz() {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -252,7 +252,7 @@ const Xqhz = () => {
                   <i
                     className="dot"
                     style={{ backgroundColor: colorList[index] }}
-                  ></i>
+                  />
                   {item.ValueType}
                 </div>
               ))}
@@ -267,10 +267,7 @@ const Xqhz = () => {
           className="tab-con"
           style={{ display: tab === 2 ? 'block' : 'none' }}
         >
-          <div
-            ref={chartRef2}
-            style={{ width: '4rem', height: '1.5rem' }}
-          ></div>
+          <div ref={chartRef2} style={{ width: '4rem', height: '1.5rem' }} />
         </div>
         <div
           className="tab-con"
@@ -294,7 +291,7 @@ const Xqhz = () => {
                   <i
                     className="dot"
                     style={{ backgroundColor: colorList[index] }}
-                  ></i>
+                  />
                   {item.ValueType}
                 </div>
               ))}
@@ -308,6 +305,6 @@ const Xqhz = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Xqhz;

@@ -48,7 +48,7 @@ const options = {
     },
   ],
 };
-const Ydxqfb = () => {
+function Ydxqfb() {
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const [dataList1, setDataList1] = useState<DataItem[]>([]);
@@ -147,10 +147,10 @@ const Ydxqfb = () => {
     <section className="box box10">
       <h2>月度需求分布</h2>
       <div className="line-chart" style={{ overflow: 'auto' }}>
-        <div ref={chartRef1} style={{ width: '6rem', height: '1.5rem' }}></div>
+        <div ref={chartRef1} style={{ width: '6rem', height: '1.5rem' }} />
       </div>
     </section>
   );
-};
+}
 
 export default Ydxqfb;

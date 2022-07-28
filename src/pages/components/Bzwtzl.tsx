@@ -20,7 +20,7 @@ const colorList = ['#682cea', '#2a7bf3', '#00e284', '#fd8c04', '#a5a5a5'];
 let change1 = 0;
 let change2 = 0;
 
-const Bzwtzl = () => {
+function Bzwtzl() {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -44,6 +44,11 @@ const Bzwtzl = () => {
     return () => clearInterval(interval);
   }, [tab]);
 
+  const query = () => {
+    queryBzwtzl('本周处理问题').then((res) => setDataList1(res));
+    queryBzwtzl('负向改进').then((res) => setDataList2(res));
+  };
+
   useEffect(() => {
     if (chartInstance1) {
       queryBzwtzl('本周处理问题').then((res) => setDataList1(res));
@@ -54,11 +59,6 @@ const Bzwtzl = () => {
     const interval = setInterval(query, refreshTime);
     return () => clearInterval(interval);
   }, [chartInstance1, chartInstance2]);
-
-  const query = () => {
-    queryBzwtzl('本周处理问题').then((res) => setDataList1(res));
-    queryBzwtzl('负向改进').then((res) => setDataList2(res));
-  };
 
   useEffect(() => {
     if (dataList1.length > 0 && chartInstance1) {
@@ -111,6 +111,7 @@ const Bzwtzl = () => {
       }, itemChangeTime);
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [dataList1, chartInstance1]);
 
   useEffect(() => {
@@ -164,6 +165,7 @@ const Bzwtzl = () => {
       }, itemChangeTime);
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [dataList2, chartInstance2]);
 
   return (
@@ -196,7 +198,7 @@ const Bzwtzl = () => {
                   <i
                     className="dot"
                     style={{ backgroundColor: colorList[index] }}
-                  ></i>
+                  />
                   {item.ValueType}
                 </div>
               ))}
@@ -218,7 +220,7 @@ const Bzwtzl = () => {
                   <i
                     className="dot"
                     style={{ backgroundColor: colorList[index] }}
-                  ></i>
+                  />
                   {item.ValueType}
                 </div>
               ))}
@@ -232,6 +234,6 @@ const Bzwtzl = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Bzwtzl;

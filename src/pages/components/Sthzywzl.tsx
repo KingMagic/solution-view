@@ -12,7 +12,7 @@ type DataItem = {
 
 let change1 = 0;
 
-const Sthzywzl = () => {
+function Sthzywzl() {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -219,13 +219,13 @@ const Sthzywzl = () => {
               <div
                 ref={chartRef2}
                 style={{ width: '1.5rem', height: '1.5rem' }}
-              ></div>
+              />
             </div>
             <div className="item">
               <div
                 ref={chartRef3}
                 style={{ width: '1.5rem', height: '1.5rem' }}
-              ></div>
+              />
             </div>
           </div>
         </div>
@@ -255,7 +255,7 @@ const Sthzywzl = () => {
                   <i
                     className="dot"
                     style={{ backgroundColor: colorList[index] }}
-                  ></i>
+                  />
                   {item.ValueType}
                 </div>
               ))}
@@ -263,12 +263,12 @@ const Sthzywzl = () => {
             <div
               ref={chartRef1}
               style={{ width: '1.5rem', height: '1.5rem' }}
-            ></div>
+            />
           </div>
         </div>
       </div>
     </section>
   );
-};
+}
 
 export default Sthzywzl;

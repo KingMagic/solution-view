@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { queryXqldxq } from '../service';
 import arrow from '../../images/alert-total-arrow.png';
-import moment from 'moment';
 
 type DataItem = {
   id: number;
@@ -22,7 +21,7 @@ const ModalRB = (props: any) => {
     queryXqldxq().then((res) => {
       const unikey = [
         ...new Set(
-          res.map((item: DataItem) => item.System + '$$' + item.Version),
+          res.map((item: DataItem) => `${item.System}$$${item.Version}`),
         ),
       ];
       setDataList(res);
@@ -32,12 +31,12 @@ const ModalRB = (props: any) => {
 
   const dom = (
     <div className="uc-alert uc-alert-total uc-show">
-      <div className="over-close"></div>
+      <div className="over-close" />
       <div className="box">
         <div className="title">
           <b>需求规划落地汇总</b>
           <a onClick={onClose} className="btn-close">
-            <i className="uc-font uc-close"></i>
+            <i className="uc-font uc-close" />
           </a>
         </div>
         <div className="main">

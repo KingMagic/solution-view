@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
+import ReactDOM from 'react-dom';
 import {
   queryFangAnXiaoShou,
   queryHangYeJiaoFu,
@@ -7,7 +8,6 @@ import {
 } from '../service';
 import { colorList, defaultOptions } from '../utils';
 import icon1 from '../../images/home-icon-1.png';
-import ReactDOM from 'react-dom';
 import ModalLT from './ModalLT';
 
 type DataItem = {
@@ -61,7 +61,7 @@ const defaultOptions2 = {
 let change1 = 0;
 let change2 = 0;
 
-const Xsqkzl = () => {
+function Xsqkzl() {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -303,7 +303,7 @@ const Xsqkzl = () => {
                     <i
                       className="dot"
                       style={{ backgroundColor: colorList[index] }}
-                    ></i>
+                    />
                     {item.ValueType}
                   </div>
                 ))}
@@ -342,7 +342,7 @@ const Xsqkzl = () => {
                     <i
                       className="dot"
                       style={{ backgroundColor: colorList[index] }}
-                    ></i>
+                    />
                     {item.ValueType}
                   </div>
                 ))}
@@ -360,29 +360,26 @@ const Xsqkzl = () => {
             <div className="uc-flex">
               <div className="g-legend uc-flex end">
                 <div className="item">
-                  <i className="dot" style={{ backgroundColor: '#2a7bf3' }}></i>
+                  <i className="dot" style={{ backgroundColor: '#2a7bf3' }} />
                   交付中
                 </div>
                 <div className="item">
-                  <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
+                  <i className="dot" style={{ backgroundColor: '#00e284' }} />
                   待交付
                 </div>
                 <div className="item">
-                  <i className="dot" style={{ backgroundColor: '#fd8c04' }}></i>
+                  <i className="dot" style={{ backgroundColor: '#fd8c04' }} />
                   已交付
                 </div>
               </div>
             </div>
-            <div
-              ref={chartRef3}
-              style={{ width: '4rem', height: '1.5rem' }}
-            ></div>
+            <div ref={chartRef3} style={{ width: '4rem', height: '1.5rem' }} />
           </div>
         </div>
       </section>
       {showModal && <ModalLT onClose={() => setShowModal(false)} />}
     </>
   );
-};
+}
 
 export default Xsqkzl;

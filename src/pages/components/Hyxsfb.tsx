@@ -16,7 +16,7 @@ let change3 = 0;
 let change4 = 0;
 let change5 = 0;
 
-const Hyxsfb = () => {
+function Hyxsfb() {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -336,17 +336,14 @@ const Hyxsfb = () => {
       <div className="box7-1">
         <h2>行业销售分布</h2>
         <div className="uc-flex">
-          <div
-            ref={chartRef1}
-            style={{ width: '2.4rem', height: '2.4rem' }}
-          ></div>
+          <div ref={chartRef1} style={{ width: '2.4rem', height: '2.4rem' }} />
           <div className="g-legend flex">
             {dataList1.map((item, index) => (
               <div className="item" key={item.ValueType}>
                 <i
                   className="dot"
                   style={{ backgroundColor: colorList[index] }}
-                ></i>
+                />
                 {item.ValueType}
               </div>
             ))}
@@ -365,14 +362,14 @@ const Hyxsfb = () => {
                 <div
                   ref={chartRef2}
                   style={{ width: '2.4rem', height: '2.4rem' }}
-                ></div>
+                />
                 <div className="g-legend flex">
                   {dataList2.map((item, index) => (
                     <div className="item" key={item.ValueType}>
                       <i
                         className="dot"
                         style={{ backgroundColor: colorList[index] }}
-                      ></i>
+                      />
                       {item.ValueType}
                     </div>
                   ))}
@@ -387,14 +384,14 @@ const Hyxsfb = () => {
                 <div
                   ref={chartRef3}
                   style={{ width: '2.4rem', height: '2.4rem' }}
-                ></div>
+                />
                 <div className="g-legend flex">
                   {dataList3.map((item, index) => (
                     <div className="item" key={item.ValueType}>
                       <i
                         className="dot"
                         style={{ backgroundColor: colorList[index] }}
-                      ></i>
+                      />
                       {item.ValueType}
                     </div>
                   ))}
@@ -409,14 +406,14 @@ const Hyxsfb = () => {
                 <div
                   ref={chartRef4}
                   style={{ width: '2.4rem', height: '2.4rem' }}
-                ></div>
+                />
                 <div className="g-legend flex">
                   {dataList4.map((item, index) => (
                     <div className="item" key={item.ValueType}>
                       <i
                         className="dot"
                         style={{ backgroundColor: colorList[index] }}
-                      ></i>
+                      />
                       {item.ValueType}
                     </div>
                   ))}
@@ -431,14 +428,14 @@ const Hyxsfb = () => {
                 <div
                   ref={chartRef5}
                   style={{ width: '2.4rem', height: '2.4rem' }}
-                ></div>
+                />
                 <div className="g-legend flex">
                   {dataList5.map((item, index) => (
                     <div className="item" key={item.ValueType}>
                       <i
                         className="dot"
                         style={{ backgroundColor: colorList[index] }}
-                      ></i>
+                      />
                       {item.ValueType}
                     </div>
                   ))}
@@ -479,6 +476,6 @@ const Hyxsfb = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Hyxsfb;

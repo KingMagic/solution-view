@@ -11,16 +11,16 @@ type DataItem = {
   YiWanCheng: string;
 };
 
-const Zjztzl = () => {
+function Zjztzl() {
   const [dataList, setDataList] = useState<DataItem[]>();
+
+  const query = () => queryZhenji().then((res) => setDataList(res));
 
   useEffect(() => {
     query();
     const interval = setInterval(query, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
-
-  const query = () => queryZhenji().then((res) => setDataList(res));
 
   return (
     <section className="box box3">
@@ -55,6 +55,6 @@ const Zjztzl = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Zjztzl;

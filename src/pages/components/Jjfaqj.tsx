@@ -18,7 +18,7 @@ type DataItem = {
   Value: number;
 };
 
-const Jjfaqj = () => {
+function Jjfaqj() {
   const [data, setData] = useState<DataItem[]>([]);
 
   useEffect(() => {
@@ -172,6 +172,6 @@ const Jjfaqj = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Jjfaqj;

@@ -2,93 +2,64 @@ import { request } from 'umi';
 
 const preUrl = 'http://qctk.nat300.top/api';
 
-const queryHangYeXiaoShou = () => {
-  return request(preUrl + '/HangYeXiaoShouFenBu');
-};
+const queryHangYeXiaoShou = () => request(`${preUrl}/HangYeXiaoShouFenBu`);
 
-const queryFangAnXiaoShou = () => {
-  return request(preUrl + '/FangAnXiaoShouFenBu');
-};
+const queryFangAnXiaoShou = () => request(`${preUrl}/FangAnXiaoShouFenBu`);
 
-const queryHangYeJiaoFu = () => {
-  return request(preUrl + '/HangYeJiaoFuHuiZong');
-};
+const queryHangYeJiaoFu = () => request(`${preUrl}/HangYeJiaoFuHuiZong`);
 
-const queryHyjjfafb = () => {
-  return request(preUrl + '/HangYeJieJueFangAnFenBu');
-};
+const queryHyjjfafb = () => request(`${preUrl}/HangYeJieJueFangAnFenBu`);
 
-const queryHyjjfafbx = () => {
-  return request(preUrl + '/HangYeJieJueFangAnFau');
-};
+const queryHyjjfafbx = () => request(`${preUrl}/HangYeJieJueFangAnFau`);
 
-const queryHeZuo = (TableType: string) => {
-  return request(preUrl + '/ShengTaiHeZuo', {
+const queryHeZuo = (TableType: string) =>
+  request(`${preUrl}/ShengTaiHeZuo`, {
     params: {
       TableType,
     },
   });
-};
 
-const queryBzwtzl = (TableType: string) => {
-  return request(preUrl + '/BenZhouWenTiZongLan', {
+const queryBzwtzl = (TableType: string) =>
+  request(`${preUrl}/BenZhouWenTiZongLan`, {
     params: {
       TableType,
     },
   });
-};
 
-const queryZhenji = () => {
-  return request(preUrl + '/ZhenJi');
-};
+const queryZhenji = () => request(`${preUrl}/ZhenJi`);
 
-const queryHyxq = (TableType: string) => {
-  return request(preUrl + '/HangYeXuQiu', {
+const queryHyxq = (TableType: string) =>
+  request(`${preUrl}/HangYeXuQiu`, {
     params: {
       TableType,
     },
   });
-};
 
-const queryYdxqfb = () => {
-  return request(preUrl + '/YueDuXuQiu');
-};
+const queryYdxqfb = () => request(`${preUrl}/YueDuXuQiu`);
 
-const queryCszl = (TableType: string) => {
-  return request(preUrl + '/CeShiZongLan', {
+const queryCszl = (TableType: string) =>
+  request(`${preUrl}/CeShiZongLan`, {
     params: {
       TableType,
     },
   });
-};
 
-const queryFakf = () => {
-  return request(preUrl + '/FangAnKaifa');
-};
+const queryFakf = () => request(`${preUrl}/FangAnKaifa`);
 
-const queryFaxsqj = (TableType: string) => {
-  return request(preUrl + '/FangAnXiaoShouQuanJing', {
+const queryFaxsqj = (TableType: string) =>
+  request(`${preUrl}/FangAnXiaoShouQuanJing`, {
     params: {
       TableType,
     },
   });
-};
 
-const queryJjfaqj = () => {
-  return request(preUrl + '/FangAnQuanJing');
-};
+const queryJjfaqj = () => request(`${preUrl}/FangAnQuanJing`);
 
-const queryHyxszb = () => {
-  return request(preUrl + '/HangYeXiaoShouZhanBi');
-};
+const queryHyxszb = () => request(`${preUrl}/HangYeXiaoShouZhanBi`);
 
-const queryXqldzl = () => {
-  return request(preUrl + '/XuQiuLuoDiZongLan');
-};
+const queryXqldzl = () => request(`${preUrl}/XuQiuLuoDiZongLan`);
 
-const queryXqldxq = () => {
-  return request(preUrl + '/XuQiuLuoDi');
-};
+const queryXqldxq = () => request(`${preUrl}/XuQiuLuoDi`);
 
 export {
   queryHangYeXiaoShou,

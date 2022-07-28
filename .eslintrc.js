@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb'],
+  extends: ['plugin:react/recommended', 'airbnb', 'plugin:react/jsx-runtime'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -28,6 +28,7 @@ module.exports = {
       'ignorePackages',
       {
         js: 'never',
+        ts: 'never',
         mjs: 'never',
         jsx: 'never',
         tsx: 'never',

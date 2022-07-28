@@ -16,7 +16,7 @@ type DataItem2 = {
 
 let change1 = 0;
 
-const Hyjjfafb = () => {
+function Hyjjfafb() {
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
@@ -172,14 +172,14 @@ const Hyjjfafb = () => {
           <div
             ref={chartRef1}
             style={{ width: '2.2rem', height: '2.2rem', margin: '0 .3rem' }}
-          ></div>
+          />
           <div className="g-legend flex">
             {dataList1.map((item, index) => (
               <div className="item" key={item.ValueType}>
                 <i
                   className="dot"
                   style={{ backgroundColor: colorList[index] }}
-                ></i>
+                />
                 {item.ValueType}
               </div>
             ))}
@@ -190,20 +190,20 @@ const Hyjjfafb = () => {
         <div className="uc-flex">
           <div className="g-legend uc-flex">
             <div className="item">
-              <i className="dot" style={{ backgroundColor: '#2a7bf3' }}></i>
+              <i className="dot" style={{ backgroundColor: '#2a7bf3' }} />
               待发布
             </div>
             <div className="item">
-              <i className="dot" style={{ backgroundColor: '#00e284' }}></i>
+              <i className="dot" style={{ backgroundColor: '#00e284' }} />
               已发布
             </div>
           </div>
           <h2>行业解决方案发布</h2>
         </div>
-        <div ref={chartRef2} style={{ width: '100%', height: '2rem' }}></div>
+        <div ref={chartRef2} style={{ width: '100%', height: '2rem' }} />
       </div>
     </section>
   );
-};
+}
 
 export default Hyjjfafb;

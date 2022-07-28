@@ -26,12 +26,12 @@ const ModalLB = (props: any) => {
 
   const dom = (
     <div className="uc-alert uc-alert-progress uc-show">
-      <div className="over-close"></div>
+      <div className="over-close" />
       <div className="box">
         <div className="title">
           <b>方案开发进展</b>{' '}
           <a onClick={onClose} className="btn-close">
-            <i className="uc-font uc-close"></i>
+            <i className="uc-font uc-close" />
           </a>
         </div>
         <div className="table" style={{ marginTop: '.2rem' }}>

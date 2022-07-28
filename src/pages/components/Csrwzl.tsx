@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import { queryCszl, queryFakf } from '../service';
+import { queryCszl } from '../service';
 import { colorList, defaultOptions } from '../utils';
 import icon4 from '../../images/home-icon-4.png';
 import ModalLB from './ModalLB';
@@ -12,22 +12,11 @@ type DataItem = {
   TableType: string;
 };
 
-type TableDataItem = {
-  id: number;
-  HangYe: string;
-  FangAnName: string;
-  JieDuan: string;
-  JinDu: string;
-  DI: number;
-  ChengSuDu: number;
-  Date: string;
-};
-
 let change1 = 0;
 let change2 = 0;
 let change3 = 0;
 
-const Csrwzl = () => {
+function Csrwzl() {
   const [tab, setTab] = useState(0);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
@@ -256,7 +245,7 @@ const Csrwzl = () => {
                     <i
                       className="dot"
                       style={{ backgroundColor: colorList[index] }}
-                    ></i>
+                    />
                     {item.ValueType}
                   </div>
                 ))}
@@ -264,7 +253,7 @@ const Csrwzl = () => {
               <div
                 ref={chartRef1}
                 style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-              ></div>
+              />
             </div>
             <div className="operate">
               <a onClick={() => setShowModal(true)} className="btn">
@@ -284,7 +273,7 @@ const Csrwzl = () => {
                     <i
                       className="dot"
                       style={{ backgroundColor: colorList[index] }}
-                    ></i>
+                    />
                     {item.ValueType}
                   </div>
                 ))}
@@ -292,7 +281,7 @@ const Csrwzl = () => {
               <div
                 ref={chartRef2}
                 style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-              ></div>
+              />
             </div>
           </div>
           <div
@@ -306,7 +295,7 @@ const Csrwzl = () => {
                     <i
                       className="dot"
                       style={{ backgroundColor: colorList[index] }}
-                    ></i>
+                    />
                     {item.ValueType}
                   </div>
                 ))}
@@ -314,7 +303,7 @@ const Csrwzl = () => {
               <div
                 ref={chartRef3}
                 style={{ width: '1.5rem', height: '1.5rem', margin: '0 .4rem' }}
-              ></div>
+              />
             </div>
           </div>
         </div>
@@ -322,6 +311,6 @@ const Csrwzl = () => {
       {showModal && <ModalLB onClose={() => setShowModal(false)} />}
     </>
   );
-};
+}
 
 export default Csrwzl;

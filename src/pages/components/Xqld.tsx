@@ -10,7 +10,7 @@ type DataItem = {
   type: string;
 };
 
-const Xqld = () => {
+function Xqld() {
   const [dataList, setDataList] = useState<DataItem[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -55,6 +55,6 @@ const Xqld = () => {
       {showModal && <ModalRB onClose={() => setShowModal(false)} />}
     </>
   );
-};
+}
 
 export default Xqld;
