@@ -9,6 +9,7 @@ import {
 import { colorList, defaultOptions } from '../utils';
 import icon1 from '../../images/home-icon-1.png';
 import ModalLT from './ModalLT';
+import PieChart from './PieChart';
 
 type DataItem = {
   id: number;
@@ -58,34 +59,26 @@ const defaultOptions2 = {
   ],
 };
 
-let change1 = 0;
-let change2 = 0;
+const change1 = 0;
+const change2 = 0;
 
 function Xsqkzl() {
   const [tab, setTab] = useState(0);
-  const chartRef1 = useRef<HTMLDivElement>(null);
-  const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
-  const chartRef2 = useRef<HTMLDivElement>(null);
-  const [chartInstance2, setChartInstance2] = useState<echarts.ECharts>();
   const chartRef3 = useRef<HTMLDivElement>(null);
   const [chartInstance3, setChartInstance3] = useState<echarts.ECharts>();
-  const [hxxsDataList, setHyxsDataList] = useState<DataItem[]>([]);
-  const [faxsDataList, setFaxsDataList] = useState<DataItem[]>([]);
   const [dataList3, setDataList3] = useState<DataItem[]>([]);
   const [showModal, setShowModal] = useState(false);
 
   // init
   useEffect(() => {
-    if (chartRef1.current) {
-      setChartInstance1(echarts.init(chartRef1.current));
-    }
-    if (chartRef2.current) {
-      setChartInstance2(echarts.init(chartRef2.current));
-    }
     if (chartRef3.current) {
       setChartInstance3(echarts.init(chartRef3.current));
     }
   }, []);
+
+  const query = () => {
+    queryHangYeJiaoFu().then((res) => setDataList3(res));
+  };
 
   useEffect(() => {
     const interval = setInterval(() => setTab((tab + 1) % 3), 45 * 1000);
@@ -93,116 +86,12 @@ function Xsqkzl() {
   }, [tab]);
 
   useEffect(() => {
-    if (chartInstance1 && chartInstance2 && chartInstance3) {
+    if (chartInstance3) {
       query();
       const interval = setInterval(query, 60 * 1000);
       return () => clearInterval(interval);
     }
-  }, [chartInstance1, chartInstance2, chartInstance3]);
-
-  const query = () => {
-    queryHangYeXiaoShou().then((res) => setHyxsDataList(res));
-    queryFangAnXiaoShou().then((res) => setFaxsDataList(res));
-    queryHangYeJiaoFu().then((res) => setDataList3(res));
-  };
-
-  useEffect(() => {
-    if (hxxsDataList.length > 0 && chartInstance1) {
-      chartInstance1.setOption({
-        ...defaultOptions,
-        series: [
-          {
-            name: '项目数',
-            type: 'pie',
-            radius: ['40%', '80%'],
-            label: {
-              show: false,
-              position: 'center',
-              formatter: '{c}\n{b}',
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '12',
-                fontWeight: 'bold',
-                color: '#fff',
-              },
-            },
-            data: hxxsDataList.map((item) => ({
-              name: item.ValueType,
-              value: item.Value,
-            })),
-          },
-        ],
-      });
-    }
-  }, [hxxsDataList, chartInstance1]);
-
-  useEffect(() => {
-    if (hxxsDataList.length > 0 && chartInstance1) {
-      const interval = setInterval(() => {
-        chartInstance1.dispatchAction({
-          type: 'downplay',
-          dataIndex: change1 % hxxsDataList.length,
-        });
-        change1 += 1;
-        chartInstance1.dispatchAction({
-          type: 'highlight',
-          dataIndex: change1 % hxxsDataList.length,
-        });
-      }, 30 * 1000);
-      return () => clearInterval(interval);
-    }
-  }, [hxxsDataList, chartInstance1]);
-
-  useEffect(() => {
-    if (faxsDataList.length > 0 && chartInstance2) {
-      chartInstance2.setOption({
-        ...defaultOptions,
-        series: [
-          {
-            name: '项目数',
-            type: 'pie',
-            radius: ['40%', '80%'],
-            label: {
-              show: false,
-              position: 'center',
-              formatter: '{c}\n{b}',
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '12',
-                fontWeight: 'bold',
-                color: '#fff',
-              },
-            },
-            data: faxsDataList.map((item) => ({
-              name: item.ValueType,
-              value: item.Value,
-            })),
-          },
-        ],
-      });
-    }
-  }, [faxsDataList, chartInstance2]);
-
-  useEffect(() => {
-    if (faxsDataList.length > 0 && chartInstance2) {
-      const interval = setInterval(() => {
-        chartInstance2.dispatchAction({
-          type: 'downplay',
-          dataIndex: change2 % faxsDataList.length,
-        });
-        change2 += 1;
-        chartInstance2.dispatchAction({
-          type: 'highlight',
-          dataIndex: change2 % faxsDataList.length,
-        });
-      }, 30 * 1000);
-      return () => clearInterval(interval);
-    }
-  }, [faxsDataList, chartInstance2]);
+  }, [chartInstance3]);
 
   useEffect(() => {
     if (dataList3.length > 0 && chartInstance3) {
@@ -285,34 +174,7 @@ function Xsqkzl() {
             className="tab-con"
             style={{ display: tab === 0 ? 'block' : 'none' }}
           >
-            <div className="uc-flex">
-              <div
-                className="g-legend flex uc-mb20"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  marginLeft: '40px',
-                }}
-              >
-                {hxxsDataList.map((item, index) => (
-                  <div
-                    className="item"
-                    key={item.ValueType}
-                    style={{ width: '50%' }}
-                  >
-                    <i
-                      className="dot"
-                      style={{ backgroundColor: colorList[index] }}
-                    />
-                    {item.ValueType}
-                  </div>
-                ))}
-              </div>
-              <div
-                ref={chartRef1}
-                style={{ width: '1.2rem', height: '1.5rem', margin: '0 .4rem' }}
-              />
-            </div>
+            <PieChart legendNumber={2} query={queryHangYeXiaoShou} />
             <div className="operate">
               <a onClick={() => setShowModal(true)} className="btn">
                 <img src={icon1} className="uc-icon16" alt="" />
@@ -324,34 +186,7 @@ function Xsqkzl() {
             className="tab-con"
             style={{ display: tab === 1 ? 'block' : 'none' }}
           >
-            <div className="uc-flex">
-              <div
-                className="g-legend flex uc-mb20"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  marginLeft: '18px',
-                }}
-              >
-                {faxsDataList.map((item, index) => (
-                  <div
-                    className="item"
-                    key={item.ValueType}
-                    style={{ width: '50%' }}
-                  >
-                    <i
-                      className="dot"
-                      style={{ backgroundColor: colorList[index] }}
-                    />
-                    {item.ValueType}
-                  </div>
-                ))}
-              </div>
-              <div
-                ref={chartRef2}
-                style={{ width: '1.2rem', height: '1.5rem', margin: '0 .4rem' }}
-              />
-            </div>
+            <PieChart legendNumber={2} query={queryFangAnXiaoShou} />
           </div>
           <div
             className="tab-con"

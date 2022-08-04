@@ -60,6 +60,10 @@ function Ydxqfb() {
     }
   }, []);
 
+  const query = () => {
+    queryYdxqfb().then((res) => setDataList1(res));
+  };
+
   useEffect(() => {
     if (chartInstance1) {
       query();
@@ -67,10 +71,6 @@ function Ydxqfb() {
       return () => clearInterval(interval);
     }
   }, [chartInstance1]);
-
-  const query = () => {
-    queryYdxqfb().then((res) => setDataList1(res));
-  };
 
   useEffect(() => {
     if (dataList1.length > 0 && chartInstance1) {
