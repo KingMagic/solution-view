@@ -50,18 +50,35 @@ function Xqhz() {
           {
             type: 'category',
             data: [...new Set(dataList2.map((item) => item.ValueType))],
+            axisLabel: {
+              show: true,
+              interval: 0,
+              overflow: 'break',
+              width: 40,
+              color: '#ffffff',
+            },
+          },
+        ],
+        yAxis: [
+          {
+            // show:false,
+            minInterval: 20,
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#ffffff',
+              },
+            },
             axisLine: {
               show: true,
               lineStyle: {
                 color: '#ffffff',
               },
-              interval: 0,
-              rotate: -30,
             },
-            axisLabel: {
-              show: true,
-              textStyle: {
-                color: '#ffffff',
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: '#d5d5d5',
               },
             },
           },
@@ -83,7 +100,7 @@ function Xqhz() {
             barWidth: 12,
             emphasis: {
               itemStyle: {
-                color: '#16e79e',
+                color: 'inherit',
               },
             },
           },
@@ -137,10 +154,14 @@ function Xqhz() {
           />
         </div>
         <div
-          className="tab-con"
-          style={{ display: tab === 2 ? 'block' : 'none' }}
+          className="tab-con line-chart"
+          style={{
+            display: tab === 2 ? 'block' : 'none',
+            overflow: 'auto',
+            marginRight: '.3rem',
+          }}
         >
-          <div ref={chartRef2} style={{ width: '4rem', height: '1.5rem' }} />
+          <div ref={chartRef2} style={{ width: '10rem', height: '1.5rem' }} />
         </div>
       </div>
     </section>

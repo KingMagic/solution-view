@@ -10,53 +10,23 @@ type DataItem = {
   TableType: string;
 };
 
-let change1 = 0;
+let change = 0;
 
 function Sthzywzl() {
   const [tab, setTab] = useState(0);
-  const chartRef1 = useRef<HTMLDivElement>(null);
-  const [chartInstance1, setChartInstance1] = useState<echarts.ECharts>();
+  const chartRef = useRef<HTMLDivElement>(null);
+  const [chartInstance, setChartInstance] = useState<echarts.ECharts>();
   const chartRef2 = useRef<HTMLDivElement>(null);
   const [chartInstance2, setChartInstance2] = useState<echarts.ECharts>();
   const chartRef3 = useRef<HTMLDivElement>(null);
   const [chartInstance3, setChartInstance3] = useState<echarts.ECharts>();
-  const [dataList1, setDataList1] = useState<DataItem[]>([]);
+  const [dataList, setDataList] = useState<DataItem[]>([]);
   const [dataList2, setDataList2] = useState<DataItem[]>([]);
-
-  // init
-  useEffect(() => {
-    if (chartRef1.current) {
-      setChartInstance1(echarts.init(chartRef1.current));
-    }
-    if (chartRef2.current) {
-      setChartInstance2(echarts.init(chartRef2.current));
-    }
-    if (chartRef3.current) {
-      setChartInstance3(echarts.init(chartRef3.current));
-    }
-  }, []);
+  const [sw, setSw] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => setTab((tab + 1) % 2), 45 * 1000);
-    return () => clearInterval(interval);
-  }, [tab]);
-
-  useEffect(() => {
-    if (chartInstance1 && chartInstance2 && chartInstance3) {
-      query();
-      const interval = setInterval(query, 30 * 1000);
-      return () => clearInterval(interval);
-    }
-  }, [chartInstance1, chartInstance2, chartInstance3]);
-
-  const query = () => {
-    queryHeZuo('合作类型占比').then((res) => setDataList1(res));
-    queryHeZuo('合作伙伴汇总').then((res) => setDataList2(res));
-  };
-
-  useEffect(() => {
-    if (dataList1.length > 0 && chartInstance1) {
-      chartInstance1.setOption({
+    if (dataList.length > 0 && chartInstance) {
+      chartInstance.setOption({
         ...defaultOptions,
         series: [
           {
@@ -76,32 +46,86 @@ function Sthzywzl() {
                 color: '#fff',
               },
             },
-            data: dataList1.map((item) => ({
+            data: dataList.map((item) => ({
               name: item.ValueType,
               value: item.Value,
             })),
           },
         ],
       });
+      chartInstance.dispatchAction({
+        type: 'highlight',
+        dataIndex: 0,
+      });
+      chartInstance.on('mouseover', (e) => {
+        setSw(false);
+        chartInstance.dispatchAction({
+          type: 'downplay',
+        });
+        chartInstance.dispatchAction({
+          type: 'highlight',
+          dataIndex: e.dataIndex,
+        });
+      });
+      chartInstance.on('mouseout', () => {
+        setSw(true);
+        chartInstance.dispatchAction({
+          type: 'downplay',
+        });
+        chartInstance.dispatchAction({
+          type: 'highlight',
+          dataIndex: change % dataList.length,
+        });
+      });
     }
-  }, [dataList1, chartInstance1]);
+  }, [dataList.length, chartInstance]);
 
   useEffect(() => {
-    if (dataList1.length > 0 && chartInstance1) {
-      const interval = setInterval(() => {
-        chartInstance1.dispatchAction({
+    const interval = setInterval(() => {
+      if (dataList.length > 0 && chartInstance && sw) {
+        chartInstance.dispatchAction({
           type: 'downplay',
-          dataIndex: change1 % dataList1.length,
         });
-        change1 += 1;
-        chartInstance1.dispatchAction({
+        change += 1;
+        chartInstance.dispatchAction({
           type: 'highlight',
-          dataIndex: change1 % dataList1.length,
+          dataIndex: change % dataList.length,
         });
-      }, 30 * 1000);
+      }
+    }, 3 * 1000);
+    return () => clearInterval(interval);
+  }, [dataList.length, chartInstance, sw]);
+
+  // init
+  useEffect(() => {
+    if (chartRef.current) {
+      setChartInstance(echarts.init(chartRef.current));
+    }
+    if (chartRef2.current) {
+      setChartInstance2(echarts.init(chartRef2.current));
+    }
+    if (chartRef3.current) {
+      setChartInstance3(echarts.init(chartRef3.current));
+    }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => setTab((tab + 1) % 2), 45 * 1000);
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  const query = () => {
+    queryHeZuo('合作类型占比').then((res) => setDataList(res));
+    queryHeZuo('合作伙伴汇总').then((res) => setDataList2(res));
+  };
+
+  useEffect(() => {
+    if (chartInstance && chartInstance2 && chartInstance3) {
+      query();
+      const interval = setInterval(query, 30 * 1000);
       return () => clearInterval(interval);
     }
-  }, [dataList1, chartInstance1]);
+  }, [chartInstance, chartInstance2, chartInstance3]);
 
   useEffect(() => {
     if (dataList2.length > 0 && chartInstance2 && chartInstance3) {
@@ -243,7 +267,7 @@ function Sthzywzl() {
                 marginLeft: '40px',
               }}
             >
-              {dataList1.map((item, index) => (
+              {dataList.map((item, index) => (
                 <div
                   className="item"
                   style={{
@@ -260,10 +284,7 @@ function Sthzywzl() {
                 </div>
               ))}
             </div>
-            <div
-              ref={chartRef1}
-              style={{ width: '1.5rem', height: '1.5rem' }}
-            />
+            <div ref={chartRef} style={{ width: '1.5rem', height: '1.5rem' }} />
           </div>
         </div>
       </div>

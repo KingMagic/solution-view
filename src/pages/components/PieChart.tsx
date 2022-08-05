@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import { colorList, defaultOptions } from '../utils';
+import {
+  colorList,
+  defaultOptions,
+  refreshTime,
+  itemChangeTime,
+} from '../utils';
 
 type DataItem = {
   id: number;
@@ -19,8 +24,6 @@ type Props = {
   margin?: string;
 };
 
-let change = 0;
-
 function PieChart(props: Props) {
   const {
     layout,
@@ -35,6 +38,7 @@ function PieChart(props: Props) {
   const [dataList, setDataList] = useState<DataItem[]>([]);
   const [chartInstance, setChartInstance] = useState<echarts.ECharts>();
   const [sw, setSw] = useState(true);
+  const [counter, setCounter] = useState(0);
 
   // init
   useEffect(() => {
@@ -45,11 +49,12 @@ function PieChart(props: Props) {
 
   useEffect(() => {
     query().then((res) => setDataList(res));
-    if (chartInstance) {
-      setInterval(() => query().then((res) => setDataList(res)), 6 * 1000);
-      // return () => clearInterval(interval);
-    }
-  }, [chartInstance]);
+    const interval = setInterval(
+      () => query().then((res) => setDataList(res)),
+      refreshTime,
+    );
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (dataList.length > 0 && chartInstance) {
@@ -80,10 +85,7 @@ function PieChart(props: Props) {
           },
         ],
       });
-      chartInstance.dispatchAction({
-        type: 'highlight',
-        dataIndex: 0,
-      });
+
       chartInstance.on('mouseover', (e) => {
         setSw(false);
         chartInstance.dispatchAction({
@@ -101,7 +103,7 @@ function PieChart(props: Props) {
         });
         chartInstance.dispatchAction({
           type: 'highlight',
-          dataIndex: change % dataList.length,
+          dataIndex: counter % dataList.length,
         });
       });
     }
@@ -113,15 +115,15 @@ function PieChart(props: Props) {
         chartInstance.dispatchAction({
           type: 'downplay',
         });
-        change += 1;
         chartInstance.dispatchAction({
           type: 'highlight',
-          dataIndex: change % dataList.length,
+          dataIndex: counter % dataList.length,
         });
+        setCounter(counter + 1);
       }
-    }, 3 * 1000);
+    }, itemChangeTime);
     return () => clearInterval(interval);
-  }, [dataList.length, chartInstance, sw]);
+  }, [dataList.length, chartInstance, sw, counter]);
 
   return (
     <div

@@ -26,6 +26,7 @@ const ModalRB = (props: any) => {
       ];
       setDataList(res);
       setUnikeyList(unikey as string[]);
+      console.log(res);
     });
   }, []);
 
@@ -44,11 +45,10 @@ const ModalRB = (props: any) => {
           <ul className="list">
             {unikeyList.map((key) => {
               const [system, version] = key.split('$$');
-              const filterData = dataList
-                .filter(
-                  (data) => data.System === system && data.Version === version,
-                )
-                .filter((data) => data.demands && data.demands > 0);
+              const filterData = dataList.filter(
+                (data) => data.System === system && data.Version === version,
+              );
+              // .filter((data) => data.demands && data.demands > 0);
               // const dateList = filterData.map(data => moment(data.MilestoneDate).valueOf())
               return (
                 <li key={key}>
@@ -56,7 +56,7 @@ const ModalRB = (props: any) => {
                     <p>{system}</p>
                     <p>{version}</p>
                   </div>
-                  <div className="right" style={{ width: '7.45rem' }}>
+                  <div className="right" style={{ width: '8rem' }}>
                     {filterData.map((data) => (
                       <div className="item" key={data.MilestoneDate}>
                         <p>
@@ -64,10 +64,12 @@ const ModalRB = (props: any) => {
                         </p>
                         <h4 style={{ color: '#ffffff' }}>{data.Action}</h4>
                         <img src={arrow} className="icon" alt="" />
-                        <div className="btm">
-                          接纳需求：
-                          <b style={{ color: '#ffad1e' }}>{data.demands}</b>
-                        </div>
+                        {data.demands && data.demands > 0 && (
+                          <div className="btm">
+                            接纳需求：
+                            <b style={{ color: '#ffad1e' }}>{data.demands}</b>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

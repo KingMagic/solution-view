@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import ReactDOM from 'react-dom';
 import {
   queryFangAnXiaoShou,
   queryHangYeJiaoFu,
   queryHangYeXiaoShou,
 } from '../service';
-import { colorList, defaultOptions } from '../utils';
 import icon1 from '../../images/home-icon-1.png';
 import ModalLT from './ModalLT';
 import PieChart from './PieChart';
@@ -25,18 +23,19 @@ const defaultOptions2 = {
     left: '3%',
     right: '4%',
     bottom: '5%',
-    top: '5%',
+    top: '8%',
     containLabel: true,
   },
   tooltip: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderColor: 'transparent',
     textStyle: {
       color: '#ffffff',
     },
   },
   yAxis: [
     {
-      // show:false,
+      minInterval: 20,
       axisLabel: {
         show: true,
         textStyle: {
@@ -58,9 +57,6 @@ const defaultOptions2 = {
     },
   ],
 };
-
-const change1 = 0;
-const change2 = 0;
 
 function Xsqkzl() {
   const [tab, setTab] = useState(0);
@@ -130,7 +126,7 @@ function Xsqkzl() {
             },
             emphasis: {
               itemStyle: {
-                color: '#16e79e',
+                color: 'inherit',
               },
             },
             label: {

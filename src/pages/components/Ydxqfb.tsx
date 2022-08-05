@@ -13,16 +13,19 @@ const options = {
     left: '3%',
     right: '4%',
     bottom: '5%',
-    top: '4%',
+    top: '6%',
     containLabel: true,
   },
   xAxis: {
     axisLabel: {
       hideOverlap: false,
+      interval: 0,
+      color: '#ffffff',
     },
   },
   tooltip: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderColor: 'transparent',
     textStyle: {
       color: '#ffffff',
     },
@@ -30,6 +33,7 @@ const options = {
   yAxis: [
     {
       type: 'value',
+      minInterval: 20,
       axisLabel: {
         textStyle: {
           color: '#ffffff',
@@ -87,9 +91,8 @@ function Ydxqfb() {
               },
             },
             axisLabel: {
-              textStyle: {
-                color: '#ffffff',
-              },
+              interval: 0,
+              color: '#ffffff',
             },
             splitLine: {
               lineStyle: {

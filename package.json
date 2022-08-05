@@ -22,6 +22,7 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
     "antd": "^4.21.3",
+    "easy-scroll": "^0.7.0",
     "echarts": "^5.3.3",
     "moment": "^2.29.4",
     "react": "17.x",

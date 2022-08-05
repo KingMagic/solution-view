@@ -61,6 +61,17 @@ function Hyjjfafb() {
             },
           },
         ],
+        yAxis: [
+          {
+            type: 'value',
+            minInterval: 2,
+            axisLabel: {
+              textStyle: {
+                color: '#ffffff',
+              },
+            },
+          },
+        ],
         series: [
           {
             name: '待发布',
@@ -74,7 +85,7 @@ function Hyjjfafb() {
             barWidth: 20,
             emphasis: {
               itemStyle: {
-                color: '#fd8c04',
+                color: 'inherit',
               },
             },
             label: {
@@ -94,7 +105,7 @@ function Hyjjfafb() {
             barWidth: 20,
             emphasis: {
               itemStyle: {
-                color: '#fd8c04',
+                color: 'inherit',
               },
             },
             label: {
